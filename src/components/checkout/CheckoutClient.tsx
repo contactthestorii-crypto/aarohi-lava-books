@@ -3,7 +3,8 @@
 import { CheckCircle, CreditCard, Money, PencilSimple, ShieldCheck, Truck } from "@phosphor-icons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useState, type FormEvent, type ReactNode } from "react";
+import { useCallback, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { useFocusFirstError } from "@/lib/hooks/useFocusFirstError";
 import { AddressFields } from "@/components/account/AddressForm";
 import { Button } from "@/components/ui/Button";
 import { Checkbox, Field, Input, Textarea } from "@/components/ui/Field";
@@ -78,6 +79,8 @@ export function CheckoutClient(props: Props) {
   const [placing, setPlacing] = useState(false);
   const [error, setError] = useState<{ message: string; cartChanged: boolean } | null>(null);
   const gateway = usePaymentGateway();
+  const rootRef = useRef<HTMLDivElement>(null);
+  useFocusFirstError(rootRef, [contactErrors, addressErrors]);
 
   const refreshQuote = useCallback(
     async (method: PaymentMethod) => {
@@ -206,7 +209,7 @@ export function CheckoutClient(props: Props) {
   );
 
   return (
-    <div className="grid gap-6 lg:grid-cols-[1fr_24rem] lg:gap-10">
+    <div ref={rootRef} className="grid gap-6 lg:grid-cols-[1fr_24rem] lg:gap-10">
       <div className="space-y-4">
         <StepCard number={1} title="Contact details" step={step} onEdit={() => setStep(1)} done={<p>{contact.fullName}, {contact.phone}<br />{contact.email}</p>}>
           <form onSubmit={submitContact} className="grid gap-4 sm:grid-cols-2" noValidate>

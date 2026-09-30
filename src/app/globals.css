@@ -37,6 +37,28 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-padding-top: 5rem;
+    color-scheme: light;
+    -webkit-tap-highlight-color: rgb(31 59 122 / 0.12);
+  }
+  a,
+  button,
+  input,
+  select,
+  textarea,
+  label,
+  summary {
+    touch-action: manipulation;
+  }
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  dialog {
+    overscroll-behavior: contain;
   }
   body {
     background: #ffffff;

@@ -39,7 +39,7 @@ export async function Header() {
         <div className="container-page flex h-16 items-center gap-2 lg:h-[72px] lg:gap-4">
           <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label={`${settings.store.name} home`}>
             <Image src="/brand/aarohi-lava-logo.png" alt="" width={62} height={47} priority className="h-10 w-auto lg:h-12" />
-            <span className="hidden flex-col leading-none sm:flex">
+            <span translate="no" className="hidden flex-col leading-none sm:flex">
               <span className="font-display-condensed text-lg font-extrabold uppercase tracking-tight text-navy-900">
                 {settings.store.short_name}
               </span>

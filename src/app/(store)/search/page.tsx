@@ -46,7 +46,7 @@ export default async function SearchPage({ searchParams }: Props) {
             name="q"
             type="search"
             defaultValue={q}
-            placeholder="Title, author, ISBN, exam or subject"
+            placeholder="Title, author, ISBN, exam or subject…"
             className="h-12 w-full rounded-[var(--radius-control)] border border-line pl-10 pr-3 text-base focus:border-navy-700 focus:outline-none focus:ring-2 focus:ring-navy-700/20"
           />
         </div>

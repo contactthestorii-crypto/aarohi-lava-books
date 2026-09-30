@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
+import { useFocusFirstError } from "@/lib/hooks/useFocusFirstError";
 import { forgotPasswordAction, registerAction, resetPasswordAction, signInAction } from "@/actions/auth";
 import { Button } from "@/components/ui/Button";
 import { Field, Input } from "@/components/ui/Field";
@@ -20,8 +21,10 @@ function FormError({ state }: { state: ActionResult }) {
 export function LoginForm({ next }: { next: string }) {
   const [state, action, pending] = useActionState(signInAction, initialActionState);
   const errors = errorsOf(state);
+  const formRef = useRef<HTMLFormElement>(null);
+  useFocusFirstError(formRef, state);
   return (
-    <form action={action} className="grid gap-4" noValidate>
+    <form ref={formRef} action={action} className="grid gap-4" noValidate>
       <input type="hidden" name="next" value={next} />
       <FormError state={state} />
       <Field label="Email" htmlFor="email" error={errors.email}>
@@ -49,9 +52,11 @@ export function LoginForm({ next }: { next: string }) {
 export function RegisterForm({ next }: { next: string }) {
   const [state, action, pending] = useActionState(registerAction, initialActionState);
   const errors = errorsOf(state);
+  const formRef = useRef<HTMLFormElement>(null);
+  useFocusFirstError(formRef, state);
   if (state.ok) return <Notice tone="success">{state.message}</Notice>;
   return (
-    <form action={action} className="grid gap-4" noValidate>
+    <form ref={formRef} action={action} className="grid gap-4" noValidate>
       <input type="hidden" name="next" value={next} />
       <FormError state={state} />
       <Field label="Full name" htmlFor="fullName" required error={errors.fullName}>
@@ -87,9 +92,11 @@ export function RegisterForm({ next }: { next: string }) {
 export function ForgotPasswordForm() {
   const [state, action, pending] = useActionState(forgotPasswordAction, initialActionState);
   const errors = errorsOf(state);
+  const formRef = useRef<HTMLFormElement>(null);
+  useFocusFirstError(formRef, state);
   if (state.ok) return <Notice tone="success">{state.message}</Notice>;
   return (
-    <form action={action} className="grid gap-4" noValidate>
+    <form ref={formRef} action={action} className="grid gap-4" noValidate>
       <FormError state={state} />
       <Field label="Email" htmlFor="email" error={errors.email}>
         <Input id="email" name="email" type="email" autoComplete="email" required invalid={Boolean(errors.email)} />
@@ -104,8 +111,10 @@ export function ForgotPasswordForm() {
 export function ResetPasswordForm() {
   const [state, action, pending] = useActionState(resetPasswordAction, initialActionState);
   const errors = errorsOf(state);
+  const formRef = useRef<HTMLFormElement>(null);
+  useFocusFirstError(formRef, state);
   return (
-    <form action={action} className="grid gap-4" noValidate>
+    <form ref={formRef} action={action} className="grid gap-4" noValidate>
       <FormError state={state} />
       <Field label="New password" htmlFor="password" error={errors.password} hint="At least 8 characters with a letter and a number.">
         <Input id="password" name="password" type="password" autoComplete="new-password" required invalid={Boolean(errors.password)} />

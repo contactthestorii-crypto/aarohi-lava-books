@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
+import { useFocusFirstError } from "@/lib/hooks/useFocusFirstError";
 import { sendContactMessage } from "@/actions/contact";
 import { Button } from "@/components/ui/Button";
 import { Field, Input, Textarea } from "@/components/ui/Field";
@@ -10,9 +11,11 @@ import { initialActionState } from "@/lib/action-result";
 export function ContactForm() {
   const [state, action, pending] = useActionState(sendContactMessage, initialActionState);
   const e = state.ok ? {} : state.fieldErrors ?? {};
+  const formRef = useRef<HTMLFormElement>(null);
+  useFocusFirstError(formRef, state);
   if (state.ok) return <Notice tone="success">{state.message}</Notice>;
   return (
-    <form action={action} className="grid gap-4 sm:grid-cols-2" noValidate>
+    <form ref={formRef} action={action} className="grid gap-4 sm:grid-cols-2" noValidate>
       {!state.ok && state.error && !state.fieldErrors ? <Notice tone="error" className="sm:col-span-2">{state.error}</Notice> : null}
       <Field label="Name" htmlFor="ct-name" required error={e.name}>
         <Input id="ct-name" name="name" autoComplete="name" invalid={Boolean(e.name)} />

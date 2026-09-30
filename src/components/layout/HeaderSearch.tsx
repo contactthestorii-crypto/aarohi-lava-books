@@ -89,7 +89,7 @@ export function HeaderSearch({ autoFocus = false, onNavigate, className }: { aut
         type="search"
         autoFocus={autoFocus}
         autoComplete="off"
-        placeholder="Search by title, author, ISBN or exam"
+        placeholder="Search by title, author, ISBN or exam…"
         value={query}
         onChange={(event) => {
           setQuery(event.target.value);

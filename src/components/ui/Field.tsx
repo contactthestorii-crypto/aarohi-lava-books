@@ -43,9 +43,12 @@ export function Field({ label, htmlFor, error, hint, required, children, classNa
 type InputProps = ComponentProps<"input"> & { invalid?: boolean };
 
 export function Input({ invalid = false, className, id, ...props }: InputProps) {
+  // Emails, codes and IDs should not be "corrected" by the browser.
+  const noSpellcheck = props.type === "email" || props.autoCapitalize === "characters" || props.name === "pincode";
   return (
     <input
       id={id}
+      spellCheck={noSpellcheck ? false : props.spellCheck}
       aria-invalid={invalid || undefined}
       aria-describedby={invalid && id ? `${id}-error` : undefined}
       className={controlClass(invalid, cn("h-11", className))}
