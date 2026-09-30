@@ -11,8 +11,8 @@ Workflow per task: read → plan → implement → test → review → commit �
 ## Phase 1: Foundation
 - [x] TASK-010 Design tokens + fonts in globals.css/layout
 - [x] TASK-011 UI primitives (Button, Input, Select, Textarea, Badge, Skeleton, EmptyState, ErrorState, Modal, Drawer, Toast)
-- [ ] TASK-012 Header (desktop + mobile drawer), Footer, test-mode banner
-- [ ] TASK-013 Homepage sections (static structure, data wired in Phase 2)
+- [x] TASK-012 Header (desktop + mobile drawer), Footer, test-mode banner
+- [x] TASK-013 Homepage sections (static structure, data wired in Phase 2)
 
 ## Phase 2: Catalog
 - [x] TASK-020 Migration: core schema (profiles, categories, products, images, inventory, settings, banners, faqs)
@@ -27,7 +27,7 @@ Workflow per task: read → plan → implement → test → review → commit �
 - [ ] TASK-029 /categories/[slug], /search + suggestions API
 
 ## Phase 3: Cart
-- [ ] TASK-030 Pricing engine (pure) + unit tests
+- [x] TASK-030 Pricing engine (pure) + unit tests
 - [ ] TASK-031 Cart service + API + cart page + header badge
 - [ ] TASK-032 Coupon validation service + tests
 

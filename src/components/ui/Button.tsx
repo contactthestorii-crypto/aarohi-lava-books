@@ -3,7 +3,7 @@ import type { ComponentProps, ReactNode } from "react";
 import { cn } from "@/lib/utils/cn";
 import { Spinner } from "./Spinner";
 
-type Variant = "primary" | "secondary" | "ghost" | "danger" | "dark";
+type Variant = "primary" | "secondary" | "ghost" | "danger" | "dark" | "inverse";
 type Size = "sm" | "md" | "lg";
 
 const base =
@@ -15,6 +15,7 @@ const variants: Record<Variant, string> = {
   ghost: "text-navy-900 hover:bg-navy-50",
   danger: "border border-red-600 bg-white text-red-600 hover:bg-red-50",
   dark: "bg-navy-900 text-white hover:bg-navy-800",
+  inverse: "border border-white/50 bg-transparent text-white hover:bg-white/10",
 };
 
 const sizes: Record<Size, string> = {
