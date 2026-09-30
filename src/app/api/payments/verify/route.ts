@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { rejectCrossSite } from "@/lib/http";
 import { z } from "zod";
 import { getPaymentProviderByName, PaymentError } from "@/lib/payments";
 import { getAdminSupabase } from "@/lib/supabase/admin";
@@ -22,6 +23,8 @@ const schema = orderAccessSchema.extend({
  * the same independently, and finalisation is idempotent.
  */
 export async function POST(request: NextRequest) {
+  const blocked = rejectCrossSite(request);
+  if (blocked) return blocked;
   const parsed = schema.safeParse(await request.json().catch(() => ({})));
   if (!parsed.success) return NextResponse.json({ error: "Invalid payment details." }, { status: 400 });
   const input = parsed.data;

@@ -65,7 +65,7 @@ Workflow per task: read → plan → implement → test → review → commit �
 - [x] TASK-091 Metadata, OG, JSON-LD, sitemap, robots
 
 ## Phase 10: Security
-- [ ] TASK-100 Security headers, rate limits wired, secret scan, review against SECURITY.md
+- [x] TASK-100 Security headers, rate limits wired, secret scan, review against SECURITY.md
 
 ## Phase 11: Testing & QA
 - [ ] TASK-110 Lint, typecheck, unit, integration, build all green

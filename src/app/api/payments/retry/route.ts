@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { rejectCrossSite } from "@/lib/http";
 import { log } from "@/lib/utils/log";
 import { orderAccessSchema } from "@/lib/validation/checkout";
 import { CheckoutError, openGatewayPayment } from "@/services/checkout";
@@ -8,6 +9,8 @@ export const dynamic = "force-dynamic";
 
 /** Re-opens the gateway for an unpaid order (same gateway order, same amount). */
 export async function POST(request: NextRequest) {
+  const blocked = rejectCrossSite(request);
+  if (blocked) return blocked;
   const parsed = orderAccessSchema.safeParse(await request.json().catch(() => ({})));
   if (!parsed.success) return NextResponse.json({ error: "Invalid request." }, { status: 400 });
   const order = await getOrderWithToken(parsed.data.orderNumber, parsed.data.token);

@@ -3,9 +3,12 @@
 ## Secrets
 
 - Server-only: `SUPABASE_SERVICE_ROLE_KEY`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET`,
-  `SHIPROCKET_PASSWORD`, `SHIPROCKET_WEBHOOK_TOKEN`, `EMAIL_API_KEY`, `CRON_SECRET`.
-- Only `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` (publishable key),
-  `NEXT_PUBLIC_RAZORPAY_KEY_ID` and `NEXT_PUBLIC_SITE_URL` may reach the browser.
+  `SHIPPING_API_SECRET` (Shiprocket password), `SHIPROCKET_WEBHOOK_TOKEN`, `EMAIL_API_KEY`, `CRON_SECRET`.
+- Only `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY` (publishable key) and
+  `NEXT_PUBLIC_SITE_URL` are bundled for the browser. The Razorpay key id (public by design)
+  is sent per checkout by the server.
+- Test-only integrations (`PAYMENT_PROVIDER=mock`, `EMAIL_PROVIDER=console`) are refused when
+  `VERCEL_ENV=production`. If you host outside Vercel, never set these in production.
 - Files that use secrets import `server-only` so a client import fails the build.
 - `.env*` is git-ignored except `.env.example` (placeholders only).
 
@@ -58,6 +61,13 @@
 
 - Shiprocket webhook requires the `x-api-key` header to equal `SHIPROCKET_WEBHOOK_TOKEN`
   (constant-time compare). Payloads validated with zod.
+
+## CSRF
+
+- Server Actions: Next.js checks the Origin header automatically.
+- Cookie-authenticated JSON route handlers (`/api/checkout/*`, `/api/payments/*`) call
+  `rejectCrossSite()` (`src/lib/http.ts`).
+- Webhooks and cron are authenticated by signature/secret instead.
 
 ## Rate limiting
 

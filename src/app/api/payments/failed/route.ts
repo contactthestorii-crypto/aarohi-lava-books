@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { rejectCrossSite } from "@/lib/http";
 import { z } from "zod";
 import { log } from "@/lib/utils/log";
 import { orderAccessSchema } from "@/lib/validation/checkout";
@@ -16,6 +17,8 @@ const schema = orderAccessSchema.extend({
 
 /** Records a failed attempt reported by the browser (informational; the order stays payable). */
 export async function POST(request: NextRequest) {
+  const blocked = rejectCrossSite(request);
+  if (blocked) return blocked;
   const parsed = schema.safeParse(await request.json().catch(() => ({})));
   if (!parsed.success) return NextResponse.json({ ok: false }, { status: 400 });
   const order = await getOrderWithToken(parsed.data.orderNumber, parsed.data.token);

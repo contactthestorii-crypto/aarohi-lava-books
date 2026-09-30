@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { rejectCrossSite } from "@/lib/http";
 import { PaymentError } from "@/lib/payments";
 import { checkRateLimit, RATE_LIMITED_MESSAGE } from "@/lib/rate-limit";
 import { isAdminClientConfigured } from "@/lib/supabase/admin";
@@ -8,6 +9,8 @@ import { CheckoutError, placeOrder } from "@/services/checkout";
 export const dynamic = "force-dynamic";
 
 export async function POST(request: NextRequest) {
+  const blocked = rejectCrossSite(request);
+  if (blocked) return blocked;
   if (!isAdminClientConfigured()) {
     return NextResponse.json({ error: "The store is not accepting orders yet." }, { status: 503 });
   }
