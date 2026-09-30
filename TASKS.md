@@ -28,8 +28,8 @@ Workflow per task: read → plan → implement → test → review → commit �
 
 ## Phase 3: Cart
 - [x] TASK-030 Pricing engine (pure) + unit tests
-- [ ] TASK-031 Cart service + API + cart page + header badge
-- [ ] TASK-032 Coupon validation service + tests
+- [x] TASK-031 Cart service + API + cart page + header badge
+- [x] TASK-032 Coupon validation service + tests
 
 ## Phase 4: Auth & account
 - [ ] TASK-040 proxy.ts session refresh; login, register, verify, forgot/reset password, logout
