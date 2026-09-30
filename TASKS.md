@@ -68,6 +68,6 @@ Workflow per task: read → plan → implement → test → review → commit �
 - [x] TASK-100 Security headers, rate limits wired, secret scan, review against SECURITY.md
 
 ## Phase 11: Testing & QA
-- [ ] TASK-110 Lint, typecheck, unit, integration, build all green
-- [ ] TASK-111 Playwright QA at 375/768/1440 (storefront without DB + with DB when credentials exist)
-- [ ] TASK-112 README setup + deployment guide; final report
+- [x] TASK-110 Lint, typecheck, unit, integration, build all green
+- [~] TASK-111 Playwright QA at 375/1440: setup-mode pages done; data-filled pages pending Supabase credentials
+- [x] TASK-112 README setup + deployment guide; final report

@@ -72,6 +72,21 @@ Reason: No Docker on the dev machine; still gives real Postgres semantics for RL
 Reason: Condensed heavy display echoes the cover; Hanken Grotesk is highly readable at small
 sizes; both self-hosted by next/font (no layout shift, no external requests).
 
+## ADR-017 Policy pages stored as editable settings
+Decision: About, shipping, returns, privacy and terms text lives in `settings.pages`, edited in
+the admin, rendered as escaped plain text (headings/bullets only).
+Reason: Policies are business commitments the publisher must own; defaults avoid invented
+timelines and return windows.
+
+## ADR-018 Same-origin guard for JSON route handlers
+Decision: cookie-authenticated POST route handlers call `rejectCrossSite()`.
+Reason: `request.json()` also parses cross-site `text/plain` form posts; Server Actions already
+have Origin checks.
+
+## ADR-019 Sentence case UI copy
+Decision: Buttons and headings use sentence case (the Vercel guidelines suggest Title Case).
+Reason: Calmer, more readable for the Indian exam-prep audience; consistent with DESIGN.md.
+
 ## ADR-016 Store brand from the cover
 Decision: Store name "Aarohi Lava Publications" (publisher logo on the cover), editable in
 settings.

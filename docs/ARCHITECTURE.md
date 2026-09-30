@@ -42,6 +42,7 @@ src/
 │   ├── (store)/          public storefront + account (shared header/footer)
 │   ├── admin/            admin dashboard (own layout, role-gated)
 │   └── api/              route handlers: webhooks, cart, search, shipping, payments, cron
+├── actions/              Server Actions (zod-validated; admin/* wrapped by withAdmin())
 ├── components/
 │   ├── ui/               primitives: Button, Input, Select, Badge, Modal, Drawer, Toast…
 │   ├── ecommerce/        ProductCard, ProductGrid, BookGallery, PriceDisplay, Rating…
