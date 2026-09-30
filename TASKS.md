@@ -54,11 +54,11 @@ Workflow per task: read → plan → implement → test → review → commit �
 - [x] TASK-073 /track-order + order-success pages
 
 ## Phase 8: Admin
-- [ ] TASK-080 Admin layout, guard, dashboard analytics
-- [ ] TASK-081 Books CRUD + images + inventory
-- [ ] TASK-082 Orders list/detail, status updates, shipments, refunds
-- [ ] TASK-083 Customers, categories, coupons, reviews
-- [ ] TASK-084 Settings, banners, FAQs, shipping & payments pages
+- [x] TASK-080 Admin layout, guard, dashboard analytics
+- [x] TASK-081 Books CRUD + images + inventory
+- [x] TASK-082 Orders list/detail, status updates, shipments, refunds
+- [x] TASK-083 Customers, categories, coupons, reviews
+- [x] TASK-084 Settings, banners, FAQs, shipping & payments pages
 
 ## Phase 9: Content & SEO
 - [ ] TASK-090 About, contact (form), FAQ, policy pages
