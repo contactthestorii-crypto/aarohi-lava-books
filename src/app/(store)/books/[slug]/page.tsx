@@ -145,7 +145,7 @@ export default async function ProductPage({ params }: Props) {
 
       <div className="mt-6 grid gap-8 lg:grid-cols-[minmax(0,30rem)_1fr] lg:gap-12">
         <div className="lg:sticky lg:top-24 lg:self-start">
-          <BookGallery images={product.images} title={product.title} />
+          <BookGallery images={product.images} title={product.title} subtitle={product.subtitle} author={product.author} exams={product.exams} />
         </div>
 
         <div>

@@ -126,11 +126,8 @@ join public.categories c on c.slug in (
 where p.slug = 'target-police-general-studies-tslprb-tgpsc'
 on conflict do nothing;
 
-insert into public.product_images (product_id, url, alt, width, height, sort_order)
-select p.id, '/books/target-police-cover.jpg', 'Target Police book cover', 763, 1119, 0
-from public.products p
-where p.slug = 'target-police-general-studies-tslprb-tgpsc'
-  and not exists (select 1 from public.product_images i where i.product_id = p.id);
+-- No product photo is seeded: the storefront renders the book from its data until the
+-- publisher uploads real product photos in the admin.
 
 -- ---------------------------------------------------------------------------
 -- FAQs describing how the store works (editable in /admin/faqs)

@@ -1,4 +1,3 @@
-import { CheckCircle } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 import { BuyButtons } from "@/components/ecommerce/BuyButtons";
 import { PriceDisplay } from "@/components/ecommerce/PriceDisplay";
@@ -37,16 +36,6 @@ export function Spotlight({ product }: { product: Product }) {
         {product.author ? <p className="mt-2 text-[15px] text-muted">by {product.author}</p> : null}
         <Rating value={product.ratingAvg} count={product.ratingCount} className="mt-2" />
 
-        {product.keyFeatures.length > 0 ? (
-          <ul className="mt-5 grid gap-2 text-[15px] sm:grid-cols-2">
-            {product.keyFeatures.slice(0, 4).map((feature) => (
-              <li key={feature} className="flex gap-2">
-                <CheckCircle size={20} weight="fill" className="mt-0.5 shrink-0 text-success" />
-                <span>{feature}</span>
-              </li>
-            ))}
-          </ul>
-        ) : null}
 
         <div className="mt-auto flex flex-col gap-4 pt-6 sm:flex-row sm:items-end sm:justify-between">
           <div>

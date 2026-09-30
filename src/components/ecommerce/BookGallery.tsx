@@ -6,17 +6,30 @@ import { useState } from "react";
 import { Dialog } from "@/components/ui/Dialog";
 import { cn } from "@/lib/utils/cn";
 import type { ProductImage } from "@/types";
+import { TypographicCover } from "./TypographicCover";
 
 /** Main image, thumbnails, arrow navigation and a full-size zoom view. */
-export function BookGallery({ images, title }: { images: ProductImage[]; title: string }) {
+export function BookGallery({
+  images,
+  title,
+  subtitle = null,
+  author = null,
+  exams = [],
+}: {
+  images: ProductImage[];
+  title: string;
+  subtitle?: string | null;
+  author?: string | null;
+  exams?: string[];
+}) {
   const [index, setIndex] = useState(0);
   const [zoomOpen, setZoomOpen] = useState(false);
   const [lens, setLens] = useState<{ x: number; y: number } | null>(null);
 
   if (images.length === 0) {
     return (
-      <div className="flex aspect-[3/4] items-center justify-center rounded-[var(--radius-card)] bg-navy-50 p-8 text-center font-display text-xl font-bold text-navy-700">
-        {title}
+      <div className="mx-auto aspect-[3/4] w-full max-w-md overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-card)]">
+        <TypographicCover product={{ title, subtitle, author, exams }} />
       </div>
     );
   }

@@ -11,6 +11,8 @@ import {
 } from "@/components/home/HomeSections";
 import { Section } from "@/components/home/Section";
 import { Spotlight } from "@/components/home/Spotlight";
+import { WhatsInside } from "@/components/home/WhatsInside";
+import { FALLBACK_SHOWCASE, showcaseFromProduct } from "@/lib/content/showcase";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteUrl } from "@/lib/config";
 import {
@@ -53,12 +55,17 @@ export default async function HomePage() {
   bestsellerRow.forEach((p) => shown.add(p.id));
   const freshArrivals = newArrivals.filter((p) => !shown.has(p.id));
 
+  // The featured book is shown from its data, not a cover photo. Until the catalog is
+  // connected (or while the product has no features entered), use the facts from the cover.
+  const fromDb = spotlight ? showcaseFromProduct(spotlight) : null;
+  const showcase = fromDb && fromDb.highlights.length > 0 ? fromDb : FALLBACK_SHOWCASE;
+
   const exams = categories.filter((c) => c.kind === "exam");
   const subjects = categories.filter((c) => c.kind !== "exam");
 
   return (
     <>
-      <Hero title={settings.home.hero_title} subtitle={settings.home.hero_subtitle} spotlight={spotlightSummary} />
+      <Hero title={settings.home.hero_title} subtitle={settings.home.hero_subtitle} book={showcase} linkable={Boolean(spotlight)} />
 
       {featured.length === 1 && spotlight ? (
         <Section title="Featured book" id="featured">
@@ -69,6 +76,8 @@ export default async function HomePage() {
           <ProductGrid products={featured} priorityCount={2} />
         </Section>
       ) : null}
+
+      <WhatsInside book={showcase} linkable={Boolean(spotlight)} />
 
       {exams.length > 0 ? (
         <Section title="Browse by exam" id="exams" className="pt-0 md:pt-0">

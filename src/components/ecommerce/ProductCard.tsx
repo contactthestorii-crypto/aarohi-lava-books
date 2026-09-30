@@ -6,6 +6,7 @@ import type { ProductSummary } from "@/types";
 import { BuyButtons } from "./BuyButtons";
 import { PriceDisplay } from "./PriceDisplay";
 import { StockStatus, isPurchasable } from "./StockStatus";
+import { TypographicCover } from "./TypographicCover";
 
 export function BookCover({
   product,
@@ -13,7 +14,7 @@ export function BookCover({
   priority = false,
   className,
 }: {
-  product: Pick<ProductSummary, "title" | "cover">;
+  product: Pick<ProductSummary, "title" | "cover"> & Partial<Pick<ProductSummary, "subtitle" | "author" | "exams">>;
   sizes: string;
   priority?: boolean;
   className?: string;
@@ -30,9 +31,7 @@ export function BookCover({
           className="object-contain p-3 drop-shadow-[0_8px_16px_rgb(16_33_77/0.18)]"
         />
       ) : (
-        <div className="flex h-full items-center justify-center p-4 text-center font-display text-sm font-bold text-navy-700">
-          {product.title}
-        </div>
+        <TypographicCover product={product} />
       )}
     </div>
   );
