@@ -103,7 +103,7 @@ export default async function HomePage() {
         </Section>
       ) : null}
 
-      <div className="container-page py-12 md:py-16">
+      <div className="container-page pb-12 md:pb-16">
         <WhyBuyDirect />
       </div>
 

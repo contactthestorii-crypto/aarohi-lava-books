@@ -61,7 +61,7 @@ const REASONS = [
 /** Asymmetric two-column block: statement left, reasons right. */
 export function WhyBuyDirect() {
   return (
-    <div className="grid gap-8 rounded-[var(--radius-card)] bg-navy-50 p-6 md:grid-cols-[0.8fr_1.2fr] md:p-10">
+    <div className="grid gap-8 rounded-[var(--radius-card)] bg-navy-50 p-6 md:p-10 lg:grid-cols-[0.8fr_1.2fr]">
       <div>
         <h2 className="font-display text-2xl font-extrabold tracking-tight text-ink md:text-3xl">Why buy direct</h2>
         <p className="mt-3 max-w-sm text-[15px] leading-relaxed text-muted">

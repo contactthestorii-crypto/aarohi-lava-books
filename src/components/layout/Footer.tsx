@@ -35,8 +35,8 @@ export async function Footer() {
 
   return (
     <footer className="mt-16 bg-ink print:hidden text-navy-100">
-      <div className="container-page grid gap-10 py-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
-        <div>
+      <div className="container-page grid grid-cols-2 gap-x-6 gap-y-10 py-12 md:grid-cols-[1fr_1fr_1.4fr] lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
+        <div className="col-span-2 md:col-span-3 lg:col-span-1">
           <p className="font-display-condensed text-2xl font-extrabold uppercase text-white">{store.name}</p>
           {store.tagline ? <p className="mt-2 max-w-xs text-sm text-navy-200">{store.tagline}</p> : null}
           <ul className="mt-5 space-y-2.5 text-sm">
@@ -68,7 +68,7 @@ export async function Footer() {
         <FooterColumn title="Shop" links={[...SHOP_LINKS, ...exams.map((c) => ({ href: `/categories/${c.slug}`, label: c.name }))]} />
         <FooterColumn title="Help" links={HELP_LINKS} />
 
-        <div>
+        <div className="col-span-2 md:col-span-1">
           <p className="text-sm font-bold text-white">New books and exam updates</p>
           <p className="mt-1 text-sm text-navy-200">Get an email when we publish a new title. No spam.</p>
           <NewsletterForm />

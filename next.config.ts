@@ -20,6 +20,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
+    // Static preview snapshots (scripts/static-snapshot.mjs) cannot run the image optimiser.
+    unoptimized: process.env.STATIC_PREVIEW === "1",
     formats: ["image/avif", "image/webp"],
     remotePatterns: supabaseHost ? [{ protocol: "https", hostname: supabaseHost, pathname: "/storage/v1/object/public/**" }] : [],
   },

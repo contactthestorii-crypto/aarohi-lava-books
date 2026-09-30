@@ -40,15 +40,15 @@ function BookInsightPanel({ book, linkable }: { book: ShowcaseBook; linkable: bo
       aria-label={`${book.brand} highlights`}
       className="relative mx-auto w-full max-w-md overflow-hidden rounded-[var(--radius-card)] bg-white text-ink shadow-[0_24px_60px_rgb(0_0_0/0.35)]"
     >
-      <div className="flex items-center justify-between gap-3 bg-red-600 px-5 py-2.5 text-white">
-        <p className="text-sm font-bold">For {book.exams.join(" | ")}</p>
-        {book.edition ? <span className="rounded-full bg-gold-400 px-2.5 py-0.5 text-xs font-extrabold text-ink">{book.edition}</span> : null}
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 bg-red-600 px-4 py-2.5 text-white sm:px-5">
+        <p className="whitespace-nowrap text-sm font-bold">For {book.exams.join(" | ")}</p>
+        {book.edition ? <span className="whitespace-nowrap rounded-full bg-gold-400 px-2.5 py-0.5 text-xs font-extrabold text-ink">{book.edition}</span> : null}
       </div>
-      <div className="p-5 sm:p-6">
-        <div className="flex items-start gap-3">
-          <Target size={40} weight="duotone" className="shrink-0 text-red-600" />
+      <div className="p-4 sm:p-6">
+        <div className="flex items-start gap-2.5 sm:gap-3">
+          <Target size={40} weight="duotone" className="size-8 shrink-0 text-red-600 sm:size-10" />
           <div>
-            <p className="font-display-condensed text-4xl font-extrabold uppercase leading-none tracking-tight text-navy-900">{book.brand}</p>
+            <p className="whitespace-nowrap font-display-condensed text-[2rem] font-extrabold uppercase leading-none tracking-tight text-navy-900 sm:text-4xl">{book.brand}</p>
             {book.title ? <p className="mt-1.5 font-display text-lg font-extrabold leading-tight">{book.title}</p> : null}
             {book.subtitle ? <p className="text-sm font-semibold uppercase tracking-wide text-navy-700">{book.subtitle}</p> : null}
           </div>

@@ -12,7 +12,7 @@ export function TestModeBanner() {
   if (isSupabaseConfigured && modes.length === 0) return null;
 
   const message = !isSupabaseConfigured
-    ? "Setup mode: the store is not connected to a database yet. Catalog, cart and checkout are unavailable."
+    ? "Preview: the store is not connected yet, so shopping is turned off."
     : `Test mode: ${modes.join(" and ")} ${modes.length === 1 ? "is" : "are"} simulated. No real money is charged and no real emails are sent.`;
 
   return (
