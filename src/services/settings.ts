@@ -1,5 +1,6 @@
 import "server-only";
 import { z } from "zod";
+import { DEFAULT_PAGES } from "@/lib/content/default-pages";
 import { getAdminSupabase } from "@/lib/supabase/admin";
 import { getPublicSupabase } from "@/lib/supabase/public";
 import { log } from "@/lib/utils/log";
@@ -50,6 +51,15 @@ const taxSchema = z.object({
   gstin: z.string().default(""),
 });
 
+const pagesSchema = z.object({
+  about: z.string().max(20000).default(DEFAULT_PAGES.about),
+  shipping_policy: z.string().max(20000).default(DEFAULT_PAGES.shipping_policy),
+  returns_policy: z.string().max(20000).default(DEFAULT_PAGES.returns_policy),
+  privacy_policy: z.string().max(20000).default(DEFAULT_PAGES.privacy_policy),
+  terms: z.string().max(20000).default(DEFAULT_PAGES.terms),
+  reviewed: z.boolean().default(false),
+});
+
 const checkoutSchema = z.object({ allow_guest: z.boolean().default(true) });
 const reviewsSchema = z.object({ moderation: z.boolean().default(true), verified_only: z.boolean().default(false) });
 const ordersSchema = z.object({ auto_create_shipment: z.boolean().default(false) });
@@ -63,6 +73,7 @@ export const settingsSchemas = {
   checkout: checkoutSchema,
   reviews: reviewsSchema,
   orders: ordersSchema,
+  pages: pagesSchema,
 } as const;
 
 export type SettingsKey = keyof typeof settingsSchemas;

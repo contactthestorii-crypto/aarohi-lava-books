@@ -11,6 +11,7 @@ import { getCart, type CartView } from "@/services/cart";
 import { getSettings } from "@/services/settings";
 
 export const metadata: Metadata = { title: "Your cart", robots: { index: false } };
+export const dynamic = "force-dynamic";
 
 export default async function CartPage() {
   if (!isAdminClientConfigured()) {

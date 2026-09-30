@@ -31,6 +31,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     siteName: "Aarohi Lava Publications",
+    images: [{ url: "/books/target-police-cover.jpg", width: 763, height: 1119, alt: "Target Police book cover" }],
   },
   twitter: { card: "summary_large_image" },
 };

@@ -11,6 +11,8 @@ import {
 } from "@/components/home/HomeSections";
 import { Section } from "@/components/home/Section";
 import { Spotlight } from "@/components/home/Spotlight";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { siteUrl } from "@/lib/config";
 import {
   getBestsellers,
   getCategories,
@@ -119,6 +121,29 @@ export default async function HomePage() {
           <FaqAccordion faqs={faqs.slice(0, 5)} />
         </Section>
       ) : null}
+
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Organization",
+              name: settings.store.name,
+              url: siteUrl,
+              logo: `${siteUrl}/brand/aarohi-lava-logo.png`,
+              ...(settings.store.support_email || settings.store.support_phone
+                ? { contactPoint: { "@type": "ContactPoint", contactType: "customer support", email: settings.store.support_email || undefined, telephone: settings.store.support_phone || undefined } }
+                : {}),
+            },
+            {
+              "@type": "WebSite",
+              name: settings.store.name,
+              url: siteUrl,
+              potentialAction: { "@type": "SearchAction", target: `${siteUrl}/search?q={query}`, "query-input": "required name=query" },
+            },
+          ],
+        }}
+      />
 
       <div className="container-page pb-4">
         <ContactBand phone={settings.store.support_phone} email={settings.store.support_email} />

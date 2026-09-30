@@ -285,7 +285,7 @@ export function SettingsSection({ section, fields }: { section: string; fields: 
             return (
               <Field key={field.name} label={label} htmlFor={fieldId} error={e[field.name]} hint={field.hint} className={field.type === "textarea" ? "md:col-span-2" : undefined}>
                 {field.type === "textarea" ? (
-                  <Textarea id={fieldId} name={field.name} defaultValue={field.value} className="min-h-20" />
+                  <Textarea id={fieldId} name={field.name} defaultValue={field.value} className={field.value.length > 300 ? "min-h-64 font-mono text-sm" : "min-h-20"} />
                 ) : (
                   <Input
                     id={fieldId}

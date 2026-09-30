@@ -15,6 +15,7 @@ import { getFreshSettings } from "@/services/settings";
 import type { Address } from "@/types";
 
 export const metadata: Metadata = { title: "Checkout", robots: { index: false } };
+export const dynamic = "force-dynamic";
 
 function onlinePaymentsAvailable(): boolean {
   try {

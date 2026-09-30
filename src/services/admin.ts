@@ -96,6 +96,12 @@ export async function getSetupChecklist(): Promise<ChecklistItem[]> {
       href: "/admin/settings",
     },
     {
+      label: "About and policy pages reviewed",
+      done: settings.pages.reviewed,
+      detail: "Edit the shipping, returns, privacy and terms pages to match how you operate.",
+      href: "/admin/settings#pages",
+    },
+    {
       label: "Shipping fees reviewed",
       done: settings.shipping.reviewed,
       detail: "Confirm the flat fee and free-shipping threshold.",

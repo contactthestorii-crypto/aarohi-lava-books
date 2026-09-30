@@ -82,6 +82,23 @@ export default async function AdminSettingsPage() {
         />
       </AdminCard>
 
+      <div id="pages" className="scroll-mt-20">
+        <AdminCard title="About and policy pages">
+          <p className="mb-4 text-sm text-muted">Plain text. A blank line starts a new paragraph, <code>## </code> starts a heading, <code>- </code> starts a bullet. These drafts avoid specific timelines and return windows: add your own terms before launch.</p>
+          <SettingsSection
+            section="pages"
+            fields={[
+              { name: "about", label: "About us", type: "textarea", value: s.pages.about },
+              { name: "shipping_policy", label: "Shipping policy", type: "textarea", value: s.pages.shipping_policy },
+              { name: "returns_policy", label: "Returns and refunds", type: "textarea", value: s.pages.returns_policy },
+              { name: "privacy_policy", label: "Privacy policy", type: "textarea", value: s.pages.privacy_policy },
+              { name: "terms", label: "Terms and conditions", type: "textarea", value: s.pages.terms },
+              { name: "reviewed", label: "I have reviewed these pages for my business", type: "checkbox", value: s.pages.reviewed },
+            ]}
+          />
+        </AdminCard>
+      </div>
+
       <div className="grid gap-6 md:grid-cols-3">
         <AdminCard title="Checkout">
           <SettingsSection section="checkout" fields={[{ name: "allow_guest", label: "Allow guest checkout", type: "checkbox", value: s.checkout.allow_guest }]} />

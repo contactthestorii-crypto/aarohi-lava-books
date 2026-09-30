@@ -61,8 +61,8 @@ Workflow per task: read → plan → implement → test → review → commit �
 - [x] TASK-084 Settings, banners, FAQs, shipping & payments pages
 
 ## Phase 9: Content & SEO
-- [ ] TASK-090 About, contact (form), FAQ, policy pages
-- [ ] TASK-091 Metadata, OG, JSON-LD, sitemap, robots
+- [x] TASK-090 About, contact (form), FAQ, policy pages
+- [x] TASK-091 Metadata, OG, JSON-LD, sitemap, robots
 
 ## Phase 10: Security
 - [ ] TASK-100 Security headers, rate limits wired, secret scan, review against SECURITY.md
