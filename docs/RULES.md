@@ -54,6 +54,9 @@
 - All schema changes are SQL files in `supabase/migrations/` (timestamped, never edited after
   being applied to production; add a new migration instead).
 - Add `created_at` / `updated_at`, foreign keys, constraints and indexes.
+- Supabase grants new tables/functions to `anon`/`authenticated` by default: every new
+  migration must enable RLS and REVOKE/GRANT explicitly (see `20260930000300_rls_policies.sql`).
+- Extend `tests/integration/database.test.ts` for every policy or function change.
 
 ## Testing
 

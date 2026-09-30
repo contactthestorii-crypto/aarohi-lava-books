@@ -6,21 +6,21 @@ Workflow per task: read → plan → implement → test → review → commit �
 - [x] TASK-001 Scaffold Next.js 16 + TypeScript + Tailwind v4 in `src/`
 - [x] TASK-002 Git init, `.gitignore` keeps `.env.example`
 - [x] TASK-003 Project docs (PRD, ARCHITECTURE, DESIGN, RULES, SECURITY, TEST_PLAN, DECISIONS, MEMORY, TASKS)
-- [ ] TASK-004 `.env.example`, typed env module, scripts (typecheck, test), Vitest config
+- [x] TASK-004 `.env.example`, typed env module, scripts (typecheck, test), Vitest config
 
 ## Phase 1: Foundation
-- [ ] TASK-010 Design tokens + fonts in globals.css/layout
-- [ ] TASK-011 UI primitives (Button, Input, Select, Textarea, Badge, Skeleton, EmptyState, ErrorState, Modal, Drawer, Toast)
+- [x] TASK-010 Design tokens + fonts in globals.css/layout
+- [x] TASK-011 UI primitives (Button, Input, Select, Textarea, Badge, Skeleton, EmptyState, ErrorState, Modal, Drawer, Toast)
 - [ ] TASK-012 Header (desktop + mobile drawer), Footer, test-mode banner
 - [ ] TASK-013 Homepage sections (static structure, data wired in Phase 2)
 
 ## Phase 2: Catalog
-- [ ] TASK-020 Migration: core schema (profiles, categories, products, images, inventory, settings, banners, faqs)
-- [ ] TASK-021 Migration: commerce schema (addresses, carts, orders, payments, shipments, coupons, reviews, wishlists, webhooks, rate limits)
-- [ ] TASK-022 Migration: RLS policies + storage bucket
-- [ ] TASK-023 Migration: functions (place_order, finalize, release, search, rate limit, rating trigger)
-- [ ] TASK-024 Seed: categories + Target Police product (cover-only facts)
-- [ ] TASK-025 Integration tests: migrations + RLS on PGlite
+- [x] TASK-020 Migration: core schema (profiles, categories, products, images, inventory, settings, banners, faqs)
+- [x] TASK-021 Migration: commerce schema (addresses, carts, orders, payments, shipments, coupons, reviews, wishlists, webhooks, rate limits)
+- [x] TASK-022 Migration: RLS policies + storage bucket
+- [x] TASK-023 Migration: functions (place_order, finalize, release, search, rate limit, rating trigger)
+- [x] TASK-024 Seed: categories + Target Police product (cover-only facts)
+- [x] TASK-025 Integration tests: migrations + RLS on PGlite
 - [ ] TASK-026 Supabase client factories + catalog service
 - [ ] TASK-027 /books listing with filters, sort, pagination
 - [ ] TASK-028 /books/[slug] product page (gallery, zoom, specs, reviews, related)
