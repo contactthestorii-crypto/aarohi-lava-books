@@ -29,6 +29,11 @@ const shippingSchema = z.object({
   free_above_paise: z.number().int().min(0).nullable().default(null),
   delivery_note: z.string().default(""),
   reviewed: z.boolean().default(false),
+  // Parcel defaults sent to the courier when a book has no weight set (editable in admin).
+  default_book_weight_grams: z.number().int().min(50).max(10000).default(500),
+  package_length_cm: z.number().min(1).max(200).default(25),
+  package_breadth_cm: z.number().min(1).max(200).default(20),
+  package_height_cm: z.number().min(1).max(200).default(5),
 });
 
 const codSchema = z.object({

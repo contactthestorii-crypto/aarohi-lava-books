@@ -32,26 +32,26 @@ Workflow per task: read → plan → implement → test → review → commit �
 - [x] TASK-032 Coupon validation service + tests
 
 ## Phase 4: Auth & account
-- [ ] TASK-040 proxy.ts session refresh; login, register, verify, forgot/reset password, logout
-- [ ] TASK-041 /account, profile, addresses CRUD, wishlist
-- [ ] TASK-042 /account/orders + order details
+- [x] TASK-040 proxy.ts session refresh; login, register, verify, forgot/reset password, logout
+- [x] TASK-041 /account, profile, addresses CRUD, wishlist
+- [x] TASK-042 /account/orders + order details
 
 ## Phase 5: Checkout
-- [ ] TASK-050 Quote API (shipping, tax, coupon, COD)
-- [ ] TASK-051 Multi-step checkout UI
-- [ ] TASK-052 Place order action (idempotent) + inventory reservation
+- [x] TASK-050 Quote API (shipping, tax, coupon, COD)
+- [x] TASK-051 Multi-step checkout UI
+- [x] TASK-052 Place order action (idempotent) + inventory reservation
 
 ## Phase 6: Payments
-- [ ] TASK-060 Payment adapter (Razorpay + mock) + tests
-- [ ] TASK-061 Verify endpoint + finalize order + emails
-- [ ] TASK-062 Razorpay webhook (verified, idempotent) + retry payment
-- [ ] TASK-063 Order expiry cron
+- [x] TASK-060 Payment adapter (Razorpay + mock) + tests
+- [x] TASK-061 Verify endpoint + finalize order + emails
+- [x] TASK-062 Razorpay webhook (verified, idempotent) + retry payment
+- [x] TASK-063 Order expiry cron
 
 ## Phase 7: Shipping
 - [x] TASK-070 Shipping adapter (Shiprocket + manual) + status map + tests
 - [x] TASK-071 Pincode serviceability API + product page checker
-- [ ] TASK-072 Shipment creation, tracking sync, Shiprocket webhook
-- [ ] TASK-073 /track-order + order-success pages
+- [x] TASK-072 Shipment creation, tracking sync, Shiprocket webhook
+- [x] TASK-073 /track-order + order-success pages
 
 ## Phase 8: Admin
 - [ ] TASK-080 Admin layout, guard, dashboard analytics

@@ -24,7 +24,7 @@ export async function Header() {
   return (
     <>
       {announcement ? (
-        <div className="bg-navy-900 text-white">
+        <div className="bg-navy-900 text-white print:hidden">
           <p className="container-page py-2 text-center text-[13px] font-medium">
             {announcement.title}
             {announcement.linkUrl ? (
@@ -35,7 +35,7 @@ export async function Header() {
           </p>
         </div>
       ) : null}
-      <header className="sticky top-0 z-30 border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+      <header className="sticky top-0 z-30 print:hidden border-b border-line bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
         <div className="container-page flex h-16 items-center gap-2 lg:h-[72px] lg:gap-4">
           <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label={`${settings.store.name} home`}>
             <Image src="/brand/aarohi-lava-logo.png" alt="" width={62} height={47} priority className="h-10 w-auto lg:h-12" />

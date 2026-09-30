@@ -9,6 +9,7 @@ import { ProductBuyBox } from "@/components/ecommerce/ProductBuyBox";
 import { ProductGrid } from "@/components/ecommerce/ProductCard";
 import { ReviewForm } from "@/components/ecommerce/ReviewForm";
 import { StockStatus, isPurchasable } from "@/components/ecommerce/StockStatus";
+import { WishlistButton } from "@/components/ecommerce/WishlistButton";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Rating } from "@/components/ui/Rating";
@@ -189,6 +190,9 @@ export default async function ProductPage({ params }: Props) {
                 purchasable={purchasable}
                 disabledLabel={product.pricePaise === null ? "Coming soon" : "Out of stock"}
               />
+            </div>
+            <div className="mt-2">
+              <WishlistButton productId={product.id} />
             </div>
             <p className="mt-4 flex items-center gap-2 text-sm text-muted">
               <ShieldCheck size={18} className="text-success" />

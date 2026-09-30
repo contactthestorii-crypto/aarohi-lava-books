@@ -254,7 +254,14 @@ function assertStock(product: ProductSummary, quantity: number) {
   }
 }
 
+/** Releases stock held by unpaid orders whose payment window closed (cheap, indexed). */
+export async function releaseExpiredReservations(): Promise<void> {
+  const { error } = await getAdminSupabase().rpc("expire_pending_orders");
+  if (error) throw error;
+}
+
 export async function addToCart(productId: string, quantity: number): Promise<void> {
+  await releaseExpiredReservations().catch(() => undefined);
   const product = await loadPurchasable(productId);
   const cartId = await ensureCartId();
   const supabase = getAdminSupabase();

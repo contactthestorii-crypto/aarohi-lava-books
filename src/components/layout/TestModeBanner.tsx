@@ -16,7 +16,7 @@ export function TestModeBanner() {
     : `Test mode: ${modes.join(" and ")} ${modes.length === 1 ? "is" : "are"} simulated. No real money is charged and no real emails are sent.`;
 
   return (
-    <div role="status" className="bg-gold-400 text-ink">
+    <div role="status" className="bg-gold-400 text-ink print:hidden">
       <p className="container-page flex items-center justify-center gap-2 py-1.5 text-center text-[13px] font-semibold">
         <Flask size={16} weight="bold" className="shrink-0" />
         {message}
