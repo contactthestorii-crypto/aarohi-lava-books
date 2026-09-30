@@ -22,9 +22,9 @@ Workflow per task: read → plan → implement → test → review → commit �
 - [x] TASK-024 Seed: categories + Target Police product (cover-only facts)
 - [x] TASK-025 Integration tests: migrations + RLS on PGlite
 - [x] TASK-026 Supabase client factories + catalog service
-- [ ] TASK-027 /books listing with filters, sort, pagination
-- [ ] TASK-028 /books/[slug] product page (gallery, zoom, specs, reviews, related)
-- [ ] TASK-029 /categories/[slug], /search + suggestions API
+- [x] TASK-027 /books listing with filters, sort, pagination
+- [x] TASK-028 /books/[slug] product page (gallery, zoom, specs, reviews, related)
+- [x] TASK-029 /categories/[slug], /search + suggestions API
 
 ## Phase 3: Cart
 - [x] TASK-030 Pricing engine (pure) + unit tests
@@ -48,8 +48,8 @@ Workflow per task: read → plan → implement → test → review → commit �
 - [ ] TASK-063 Order expiry cron
 
 ## Phase 7: Shipping
-- [ ] TASK-070 Shipping adapter (Shiprocket + manual) + status map + tests
-- [ ] TASK-071 Pincode serviceability API + product page checker
+- [x] TASK-070 Shipping adapter (Shiprocket + manual) + status map + tests
+- [x] TASK-071 Pincode serviceability API + product page checker
 - [ ] TASK-072 Shipment creation, tracking sync, Shiprocket webhook
 - [ ] TASK-073 /track-order + order-success pages
 
