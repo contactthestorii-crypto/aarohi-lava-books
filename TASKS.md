@@ -21,7 +21,7 @@ Workflow per task: read → plan → implement → test → review → commit �
 - [x] TASK-023 Migration: functions (place_order, finalize, release, search, rate limit, rating trigger)
 - [x] TASK-024 Seed: categories + Target Police product (cover-only facts)
 - [x] TASK-025 Integration tests: migrations + RLS on PGlite
-- [ ] TASK-026 Supabase client factories + catalog service
+- [x] TASK-026 Supabase client factories + catalog service
 - [ ] TASK-027 /books listing with filters, sort, pagination
 - [ ] TASK-028 /books/[slug] product page (gallery, zoom, specs, reviews, related)
 - [ ] TASK-029 /categories/[slug], /search + suggestions API
