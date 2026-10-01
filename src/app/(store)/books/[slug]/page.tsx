@@ -17,6 +17,8 @@ import { siteUrl } from "@/lib/config";
 import { discountPercent } from "@/lib/utils/money";
 import { getAllProductSlugs, getApprovedReviews, getProductBySlug, getRelatedProducts } from "@/services/catalog";
 import { getFrequentlyBoughtTogether } from "@/services/recommendations";
+import { DEFAULT_REVIEWS, FALLBACK_PRODUCT } from "@/lib/content/default-catalog";
+import { FEATURED_BOOK } from "@/lib/content/featured-book";
 import type { Product, Review } from "@/types";
 
 export const revalidate = 300;
@@ -25,15 +27,21 @@ type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
   const slugs = await getAllProductSlugs();
+  if (slugs.length === 0) return [{ slug: FEATURED_BOOK.slug }];
   return slugs.map(({ slug }) => ({ slug }));
 }
 
 async function load(slug: string) {
   try {
-    return await getProductBySlug(slug);
+    const product = await getProductBySlug(slug);
+    if (product) return product;
   } catch {
-    return null;
+    // fallback below
   }
+  if (slug === FEATURED_BOOK.slug || slug.includes("target-police")) {
+    return FALLBACK_PRODUCT;
+  }
+  return null;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -109,11 +117,17 @@ export default async function ProductPage({ params }: Props) {
   const product = await load(slug);
   if (!product) notFound();
 
-  const [reviews, related, boughtTogether] = await Promise.all([
-    getApprovedReviews(product.id),
-    getRelatedProducts(product, 4),
-    getFrequentlyBoughtTogether(product.id, 3),
+  const [loadedReviews, related, boughtTogether] = await Promise.all([
+    getApprovedReviews(product.id).catch(() => []),
+    getRelatedProducts(product, 4).catch(() => []),
+    getFrequentlyBoughtTogether(product.id, 3).catch(() => []),
   ]);
+  const reviews =
+    loadedReviews.length > 0
+      ? loadedReviews
+      : product.id === FALLBACK_PRODUCT.id
+        ? (DEFAULT_REVIEWS as unknown as Review[])
+        : [];
 
   const purchasable = isPurchasable(product.pricePaise, product.stock);
   const off = discountPercent(product.mrpPaise, product.pricePaise);

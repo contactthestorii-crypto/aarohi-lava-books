@@ -164,3 +164,14 @@ export function AdminNoteForm({ orderId, note, needsAttention }: { orderId: stri
     </form>
   );
 }
+
+// Exported component for admin order display
+export function OrderAdminForms({ order }: { order: any }) {
+  return (
+    <div className="p-4 border rounded bg-white shadow">
+      {/* Placeholder UI – you can replace with a richer layout later */}
+      <pre className="text-sm overflow-x-auto">{JSON.stringify(order, null, 2)}</pre>
+    </div>
+  );
+}
+

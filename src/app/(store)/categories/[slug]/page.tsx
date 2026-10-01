@@ -25,12 +25,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+function getCategoryBannerImage(slug: string): string {
+  if (slug.includes("tslprb")) return "/images/ecommerce/cat-tslprb.jpg";
+  if (slug.includes("tgpsc")) return "/images/ecommerce/cat-tgpsc.jpg";
+  if (slug.includes("police") || slug.includes("paper")) return "/images/ecommerce/cat-papers.jpg";
+  return "/images/ecommerce/cat-general-studies.jpg";
+}
+
+import { DEFAULT_EXAMS, DEFAULT_SUBJECTS, FALLBACK_PRODUCT_SUMMARY } from "@/lib/content/default-catalog";
+
 export default async function CategoryPage({ params, searchParams }: Props) {
   const { slug } = await params;
   const { filters, values } = parseCatalogParams(await searchParams);
 
   const category = await getCategoryBySlug(slug).catch(() => null);
-  if (!category && isSupabaseConfigured) notFound();
+  const fallbackCat = DEFAULT_EXAMS.find((e) => e.slug === slug) ?? DEFAULT_SUBJECTS.find((s) => s.slug === slug);
+  const effectiveCategory = category ?? fallbackCat;
+
+  if (!effectiveCategory && isSupabaseConfigured) notFound();
 
   let result: Paginated<ProductSummary> = { items: [], total: 0, page: 1, totalPages: 0 };
   let failed = false;
@@ -41,17 +53,50 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   } catch {
     failed = true;
   }
-  if (category?.kind === "exam") exams = [];
+  if (effectiveCategory?.kind === "exam") exams = [];
+
+  const effectiveResult: Paginated<ProductSummary> =
+    result.items.length > 0
+      ? result
+      : {
+          items: [FALLBACK_PRODUCT_SUMMARY],
+          total: 1,
+          page: 1,
+          totalPages: 1,
+        };
 
   const base = `/categories/${slug}`;
-  const name = category?.name ?? "Category";
+  const name = effectiveCategory?.name ?? "Category";
+  const bannerImage = getCategoryBannerImage(slug);
 
   return (
     <div className="container-page py-6 md:py-10">
       <Breadcrumbs items={[{ label: "Books", href: "/books" }, { label: name }]} />
-      <div className="mt-4">
-        <h1 className="font-display text-3xl font-extrabold tracking-tight md:text-4xl">{name}</h1>
-        {category?.description ? <p className="mt-2 max-w-[65ch] text-[15px] text-muted">{category.description}</p> : null}
+
+      {/* Category Header Hero Card */}
+      <div className="mt-5 overflow-hidden rounded-2xl border border-navy-800 bg-gradient-to-r from-navy-950 via-navy-900 to-navy-950 p-6 text-white shadow-lg md:p-8">
+        <div className="flex flex-col-reverse items-center justify-between gap-6 md:flex-row">
+          <div className="max-w-2xl text-center md:text-left">
+            <span className="rounded-full bg-gold-400/20 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-gold-400 ring-1 ring-gold-400/30">
+              Official Exam Collection
+            </span>
+            <h1 className="mt-3 font-display-condensed text-3xl font-extrabold uppercase tracking-tight text-white md:text-4xl lg:text-5xl">
+              {name}
+            </h1>
+            <p className="mt-2 text-sm leading-relaxed text-navy-200 md:text-base">
+              {category?.description ??
+                "Comprehensive study guides, topic-wise PYQs, and 360° explanations curated for competitive examination aspirants."}
+            </p>
+          </div>
+          <div className="relative size-24 shrink-0 overflow-hidden rounded-xl bg-white/10 p-2 ring-1 ring-white/20 sm:size-28 md:size-32">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={bannerImage}
+              alt=""
+              className="size-full object-contain drop-shadow-md"
+            />
+          </div>
+        </div>
       </div>
       <div className="mt-6 grid gap-6 lg:grid-cols-[16rem_1fr] lg:gap-8">
         <aside>
@@ -68,7 +113,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           </div>
         </aside>
         <CatalogResults
-          result={result}
+          result={effectiveResult}
           failed={failed}
           hrefFor={(page) => pageHref(base, values, page)}
           emptyTitle={`No ${name} books yet`}

@@ -5,7 +5,6 @@ import { CouponForm } from "@/components/cart/CouponForm";
 import { PriceBreakdown } from "@/components/checkout/OrderSummary";
 import { ButtonLink } from "@/components/ui/Button";
 import { EmptyState, ErrorState, Notice } from "@/components/ui/States";
-import { isAdminClientConfigured } from "@/lib/supabase/admin";
 import { log } from "@/lib/utils/log";
 import { getCart, type CartView } from "@/services/cart";
 import { getSettings } from "@/services/settings";
@@ -14,14 +13,6 @@ export const metadata: Metadata = { title: "Your cart", robots: { index: false }
 export const dynamic = "force-dynamic";
 
 export default async function CartPage() {
-  if (!isAdminClientConfigured()) {
-    return (
-      <div className="container-page py-10">
-        <EmptyState icon={<ShoppingCartSimple />} title="The cart is not available yet" description="The store is still being set up. Please check back soon." />
-      </div>
-    );
-  }
-
   let cart: CartView;
   try {
     cart = await getCart();

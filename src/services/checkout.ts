@@ -186,7 +186,7 @@ export async function openGatewayPayment(orderId: string): Promise<ClientCheckou
     return created.checkout;
   } catch (error) {
     log.error("checkout.gateway", error, { orderId });
-    await cancelOrder(orderId, "Payment could not be started", "system").catch(() => undefined);
+    await cancelOrder(orderId, "Payment could not be started", "system", false).catch(() => undefined);
     throw new CheckoutError(
       error instanceof PaymentError ? error.userMessage : "Online payment could not be started. You have not been charged. Please try again.",
       "GATEWAY",

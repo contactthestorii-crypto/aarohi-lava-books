@@ -1,27 +1,32 @@
-import { ProductCard, ProductGrid } from "@/components/ecommerce/ProductCard";
+import { AspirantSuccessSection } from "@/components/home/AspirantSuccessSection";
+import { EcommerceUspStrip } from "@/components/home/EcommerceUspStrip";
 import { Hero } from "@/components/home/Hero";
 import {
   AuthorPublisher,
   ContactBand,
   ExamTiles,
   FaqAccordion,
-  ReviewList,
   SubjectChips,
   WhyBuyDirect,
 } from "@/components/home/HomeSections";
+import { InsideBookPreviewSection } from "@/components/home/InsideBookPreviewSection";
 import { Section } from "@/components/home/Section";
 import { Spotlight } from "@/components/home/Spotlight";
+import { StudyMethodologySection } from "@/components/home/StudyMethodologySection";
 import { WhatsInside } from "@/components/home/WhatsInside";
+import {
+  DEFAULT_EXAMS,
+  DEFAULT_FAQS,
+  DEFAULT_SUBJECTS,
+  FALLBACK_PRODUCT,
+} from "@/lib/content/default-catalog";
 import { FALLBACK_SHOWCASE, showcaseFromProduct } from "@/lib/content/showcase";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteUrl } from "@/lib/config";
 import {
-  getBestsellers,
   getCategories,
   getFaqs,
   getFeaturedProducts,
-  getLatestApprovedReviews,
-  getNewArrivals,
   getProductBySlug,
 } from "@/services/catalog";
 import { getSettings } from "@/services/settings";
@@ -37,99 +42,89 @@ async function safe<T>(promise: Promise<T>, fallback: T): Promise<T> {
 }
 
 export default async function HomePage() {
-  const [settings, featured, bestsellers, newArrivals, categories, reviews, faqs] = await Promise.all([
+  const [settings, featured, categories, faqs] = await Promise.all([
     getSettings(),
-    safe(getFeaturedProducts(8), []),
-    safe(getBestsellers(8), []),
-    safe(getNewArrivals(8), []),
+    safe(getFeaturedProducts(1), []),
     safe(getCategories(), []),
-    safe(getLatestApprovedReviews(6), []),
     safe(getFaqs(), []),
   ]);
 
-  const spotlightSummary = featured[0] ?? newArrivals[0] ?? null;
+  const spotlightSummary = featured[0] ?? null;
   const spotlight = spotlightSummary ? await safe(getProductBySlug(spotlightSummary.slug), null) : null;
 
-  const shown = new Set(featured.map((p) => p.id));
-  const bestsellerRow = bestsellers.filter((p) => !(featured.length === 1 && shown.has(p.id)));
-  bestsellerRow.forEach((p) => shown.add(p.id));
-  const freshArrivals = newArrivals.filter((p) => !shown.has(p.id));
-
-  // The featured book is shown from its data, not a cover photo. Until the catalog is
-  // connected (or while the product has no features entered), use the facts from the cover.
+  // The featured book is shown from its data, not a cover photo.
   const fromDb = spotlight ? showcaseFromProduct(spotlight) : null;
   const showcase = fromDb && fromDb.highlights.length > 0 ? fromDb : FALLBACK_SHOWCASE;
 
   const exams = categories.filter((c) => c.kind === "exam");
   const subjects = categories.filter((c) => c.kind !== "exam");
 
+  const effectiveExams = exams.length > 0 ? exams : DEFAULT_EXAMS;
+  const effectiveSubjects = subjects.length > 0 ? subjects : DEFAULT_SUBJECTS;
+  const effectiveSpotlight = spotlight ?? FALLBACK_PRODUCT;
+  const effectiveFaqs = faqs.length > 0 ? faqs : DEFAULT_FAQS;
+
   return (
     <>
-      <Hero title={settings.home.hero_title} subtitle={settings.home.hero_subtitle} book={showcase} linkable={Boolean(spotlight)} />
+      <Hero
+        title={settings.home.hero_title}
+        subtitle={settings.home.hero_subtitle}
+        book={showcase}
+        linkable={true}
+      />
 
-      {featured.length === 1 && spotlight ? (
-        <Section title="Featured book" id="featured">
-          <Spotlight product={spotlight} />
-        </Section>
-      ) : featured.length > 1 ? (
-        <Section title="Featured books" href="/books" id="featured">
-          <ProductGrid products={featured} priorityCount={2} />
-        </Section>
-      ) : null}
+      <EcommerceUspStrip />
 
-      <WhatsInside book={showcase} linkable={Boolean(spotlight)} />
+      <Section
+        title="Browse by Exam Category"
+        description="Official preparation materials and previous solved question papers for Telangana state recruitment boards."
+        id="exams"
+      >
+        <ExamTiles exams={effectiveExams} />
+      </Section>
 
-      {exams.length > 0 ? (
-        <Section title="Browse by exam" id="exams" className="pt-0 md:pt-0">
-          <ExamTiles exams={exams} />
-        </Section>
-      ) : null}
+      <Section
+        title="Featured Official Publication"
+        description="Our flagship 360° General Studies solved papers guide for Telangana Sub-Inspector and competitive exams."
+        id="featured"
+      >
+        <Spotlight product={effectiveSpotlight} />
+      </Section>
 
-      {bestsellerRow.length > 0 ? (
-        <Section title="Best sellers" href="/books?sort=featured" id="bestsellers">
-          <ul className="scrollbar-none -mx-4 flex snap-x gap-3 overflow-x-auto px-4 pb-2 md:mx-0 md:px-0">
-            {bestsellerRow.map((product) => (
-              <li key={product.id} className="w-[46%] shrink-0 snap-start sm:w-[31%] lg:w-[23%]">
-                <ProductCard product={product} />
-              </li>
-            ))}
-          </ul>
-        </Section>
-      ) : null}
+      <InsideBookPreviewSection slug={showcase.slug} />
 
-      {freshArrivals.length > 0 ? (
-        <Section title="New arrivals" href="/books?sort=newest" id="new">
-          <ProductGrid products={freshArrivals.slice(0, 4)} />
-        </Section>
-      ) : null}
+      <WhatsInside book={showcase} linkable={true} />
+
+      <StudyMethodologySection />
+
+      <AspirantSuccessSection />
 
       <div className="container-page pb-12 md:pb-16">
         <WhyBuyDirect />
       </div>
 
-      {subjects.length > 0 ? (
-        <Section title="Browse by subject" id="subjects" className="pt-0 md:pt-0">
-          <SubjectChips subjects={subjects} />
-        </Section>
-      ) : null}
+      <Section
+        title="Explore by Subject & Module"
+        description="Quickly find targeted topics and modules for your syllabus preparation."
+        id="subjects"
+        className="pt-0 md:pt-0"
+      >
+        <SubjectChips subjects={effectiveSubjects} />
+      </Section>
 
-      {spotlight?.author ? (
-        <Section title="Author and publisher" id="author">
-          <AuthorPublisher product={spotlight} storeName={settings.store.name} />
-        </Section>
-      ) : null}
+      <Section title="Author & Publisher Credentials" id="author">
+        <AuthorPublisher product={effectiveSpotlight} storeName={settings.store.name} />
+      </Section>
 
-      {reviews.length > 0 ? (
-        <Section title="What readers say" id="reviews">
-          <ReviewList reviews={reviews} />
-        </Section>
-      ) : null}
-
-      {faqs.length > 0 ? (
-        <Section title="Frequently asked questions" href="/faq" hrefLabel="All FAQs" id="faq">
-          <FaqAccordion faqs={faqs.slice(0, 5)} />
-        </Section>
-      ) : null}
+      <Section
+        title="Frequently Asked Questions"
+        description="Everything you need to know about ordering, delivery timelines, and syllabus updates."
+        href="/faq"
+        hrefLabel="All FAQs"
+        id="faq"
+      >
+        <FaqAccordion faqs={effectiveFaqs.slice(0, 5)} />
+      </Section>
 
       <JsonLd
         data={{
@@ -141,22 +136,34 @@ export default async function HomePage() {
               url: siteUrl,
               logo: `${siteUrl}/brand/aarohi-lava-logo.png`,
               ...(settings.store.support_email || settings.store.support_phone
-                ? { contactPoint: { "@type": "ContactPoint", contactType: "customer support", email: settings.store.support_email || undefined, telephone: settings.store.support_phone || undefined } }
+                ? {
+                    contactPoint: {
+                      "@type": "ContactPoint",
+                      contactType: "customer support",
+                      email: settings.store.support_email || undefined,
+                      telephone: settings.store.support_phone || undefined,
+                    },
+                  }
                 : {}),
             },
             {
               "@type": "WebSite",
               name: settings.store.name,
               url: siteUrl,
-              potentialAction: { "@type": "SearchAction", target: `${siteUrl}/search?q={query}`, "query-input": "required name=query" },
+              potentialAction: {
+                "@type": "SearchAction",
+                target: `${siteUrl}/search?q={query}`,
+                "query-input": "required name=query",
+              },
             },
           ],
         }}
       />
 
-      <div className="container-page pb-4">
+      <div className="container-page pb-6">
         <ContactBand phone={settings.store.support_phone} email={settings.store.support_email} />
       </div>
     </>
   );
 }
+

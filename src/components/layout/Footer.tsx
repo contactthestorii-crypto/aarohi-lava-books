@@ -1,4 +1,5 @@
 import { EnvelopeSimple, MapPin, Phone, ShieldCheck } from "@phosphor-icons/react/ssr";
+import Image from "next/image";
 import Link from "next/link";
 import { getCategories } from "@/services/catalog";
 import { getSettings } from "@/services/settings";
@@ -35,10 +36,22 @@ export async function Footer() {
 
   return (
     <footer className="mt-16 bg-ink print:hidden text-navy-100">
-      <div className="container-page grid grid-cols-2 gap-x-6 gap-y-10 py-12 md:grid-cols-[1fr_1fr_1.4fr] lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
+      <div className="container-page grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-10 py-12 md:grid-cols-[1fr_1fr_1.4fr] lg:grid-cols-[1.4fr_1fr_1fr_1.3fr]">
         <div className="col-span-2 md:col-span-3 lg:col-span-1">
-          <p className="font-display-condensed text-2xl font-extrabold uppercase text-white">{store.name}</p>
-          {store.tagline ? <p className="mt-2 max-w-xs text-sm text-navy-200">{store.tagline}</p> : null}
+          <div className="flex items-center gap-3">
+            <Image
+              src="/brand/aarohi-lava-logo.png"
+              alt={`${store.name} Logo`}
+              width={56}
+              height={56}
+              className="size-14 rounded-xl bg-white p-1 shadow-md object-contain"
+            />
+            <div>
+              <p className="font-display-condensed text-2xl font-extrabold uppercase text-white">{store.name}</p>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-red-500">Official Publisher</p>
+            </div>
+          </div>
+          {store.tagline ? <p className="mt-3 max-w-xs text-xs text-navy-200">{store.tagline}</p> : null}
           <ul className="mt-5 space-y-2.5 text-sm">
             {store.support_phone ? (
               <li className="flex items-center gap-2.5">

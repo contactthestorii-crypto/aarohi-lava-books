@@ -40,7 +40,7 @@ const NAV = [
 ];
 
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
   return (
     <nav aria-label="Admin" className="flex flex-col gap-0.5">
       {NAV.map(({ href, label, icon: Icon }) => {

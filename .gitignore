@@ -19,6 +19,7 @@
 
 # production
 /build
+/snapshot/
 
 # misc
 .DS_Store
@@ -47,3 +48,5 @@ next-env.d.ts
 /playwright-report/
 /.playwright-cli/
 /*.png
+
+.vercel

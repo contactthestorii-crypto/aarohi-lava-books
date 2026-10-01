@@ -6,7 +6,6 @@ import { ErrorState } from "@/components/ui/States";
 import { getProfile } from "@/lib/auth";
 import { paymentProviderName } from "@/lib/env";
 import { getPaymentProvider } from "@/lib/payments";
-import { isAdminClientConfigured } from "@/lib/supabase/admin";
 import { createServerSupabase } from "@/lib/supabase/server";
 import { log } from "@/lib/utils/log";
 import { getCart } from "@/services/cart";
@@ -27,17 +26,21 @@ function onlinePaymentsAvailable(): boolean {
 
 async function loadCheckout() {
   try {
-    const [cart, settings, profile] = await Promise.all([getCart(), getFreshSettings(), getProfile()]);
+    const [cart, settings, profile] = await Promise.all([getCart(), getFreshSettings(), getProfile().catch(() => null)]);
     if (cart.lines.length === 0 || cart.hasIssues) redirect("/cart");
     if (!profile && !settings.checkout.allow_guest) redirect("/auth/login?next=/checkout");
 
     let addresses: Address[] = [];
     if (profile) {
-      const { data } = await (await createServerSupabase())
-        .from("addresses")
-        .select("id, full_name, phone, line1, line2, area, city, state, pincode, landmark, is_default")
-        .order("is_default", { ascending: false });
-      addresses = ((data ?? []) as AddressRow[]).map(mapAddress);
+      try {
+        const { data } = await (await createServerSupabase())
+          .from("addresses")
+          .select("id, full_name, phone, line1, line2, area, city, state, pincode, landmark, is_default")
+          .order("is_default", { ascending: false });
+        addresses = ((data ?? []) as AddressRow[]).map(mapAddress);
+      } catch {
+        addresses = [];
+      }
     }
     return { cart, settings, profile, addresses };
   } catch (error) {
@@ -48,7 +51,6 @@ async function loadCheckout() {
 }
 
 export default async function CheckoutPage() {
-  if (!isAdminClientConfigured()) redirect("/cart");
   const data = await loadCheckout();
   if (!data) {
     return (

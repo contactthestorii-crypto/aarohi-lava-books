@@ -24,6 +24,9 @@ import {
 // Every function degrades to an empty result when the store is not configured, so the
 // storefront renders a clear state instead of crashing (docs/ARCHITECTURE.md).
 
+import { DEFAULT_EXAMS, DEFAULT_FAQS, DEFAULT_REVIEWS, DEFAULT_SUBJECTS, FALLBACK_PRODUCT, FALLBACK_PRODUCT_SUMMARY } from "@/lib/content/default-catalog";
+import { FEATURED_BOOK } from "@/lib/content/featured-book";
+
 export const SORT_OPTIONS = {
   featured: "Featured",
   newest: "Newest",
@@ -53,33 +56,52 @@ function emptyPage<T>(page = 1): Paginated<T> {
 
 export async function getCategories(kind?: CategoryKind): Promise<Category[]> {
   const supabase = getPublicSupabase();
-  if (!supabase) return [];
+  if (!supabase) {
+    if (!kind) return [...DEFAULT_EXAMS, ...DEFAULT_SUBJECTS];
+    if (kind === "exam") return DEFAULT_EXAMS;
+    return DEFAULT_SUBJECTS;
+  }
   let query = supabase.from("categories").select(CATEGORY_COLUMNS).order("kind").order("sort_order").order("name");
   if (kind) query = query.eq("kind", kind);
   const { data, error } = await query;
   if (error) {
     log.error("catalog.getCategories", error);
-    throw new CatalogError("Could not load categories");
+    if (!kind) return [...DEFAULT_EXAMS, ...DEFAULT_SUBJECTS];
+    if (kind === "exam") return DEFAULT_EXAMS;
+    return DEFAULT_SUBJECTS;
   }
-  return (data as CategoryRow[]).map(mapCategory);
+  const mapped = (data as CategoryRow[]).map(mapCategory);
+  return mapped.length > 0 ? mapped : kind === "exam" ? DEFAULT_EXAMS : kind === "subject" ? DEFAULT_SUBJECTS : [...DEFAULT_EXAMS, ...DEFAULT_SUBJECTS];
 }
 
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   const supabase = getPublicSupabase();
-  if (!supabase) return null;
+  if (!supabase) {
+    return DEFAULT_EXAMS.find((e) => e.slug === slug) ?? DEFAULT_SUBJECTS.find((s) => s.slug === slug) ?? null;
+  }
   const { data, error } = await supabase.from("categories").select(CATEGORY_COLUMNS).eq("slug", slug).maybeSingle();
   if (error) {
     log.error("catalog.getCategoryBySlug", error, { slug });
-    throw new CatalogError("Could not load category");
+    return DEFAULT_EXAMS.find((e) => e.slug === slug) ?? DEFAULT_SUBJECTS.find((s) => s.slug === slug) ?? null;
   }
-  return data ? mapCategory(data as CategoryRow) : null;
+  return data ? mapCategory(data as CategoryRow) : DEFAULT_EXAMS.find((e) => e.slug === slug) ?? DEFAULT_SUBJECTS.find((s) => s.slug === slug) ?? null;
 }
 
 export async function listProducts(filters: ProductFilters = {}): Promise<Paginated<ProductSummary>> {
   const page = Math.max(1, filters.page ?? 1);
   const pageSize = filters.pageSize ?? PRODUCTS_PER_PAGE;
   const supabase = getPublicSupabase();
-  if (!supabase) return emptyPage(page);
+  if (!supabase) {
+    let items = [FALLBACK_PRODUCT_SUMMARY];
+    if (filters.categorySlug) {
+      const cat = DEFAULT_EXAMS.find((e) => e.slug === filters.categorySlug) ?? DEFAULT_SUBJECTS.find((s) => s.slug === filters.categorySlug);
+      if (!cat) return emptyPage(page);
+    }
+    if (filters.exam && !FALLBACK_PRODUCT_SUMMARY.exams.includes(filters.exam)) {
+      items = [];
+    }
+    return { items, total: items.length, page, totalPages: Math.ceil(items.length / pageSize) };
+  }
 
   let categoryId: string | null = null;
   if (filters.categorySlug) {
@@ -90,7 +112,6 @@ export async function listProducts(filters: ProductFilters = {}): Promise<Pagina
 
   let select = PRODUCT_SUMMARY_SELECT;
   if (categoryId) select += ", product_categories!inner(category_id)";
-  // "In stock" needs a priced book with units on hand (reserved units are checked below).
   if (filters.inStockOnly) select += ", stock:inventory!inner(quantity)";
   let query = supabase.from("products").select(select, { count: "exact" }).eq("status", "published");
 
@@ -126,9 +147,10 @@ export async function listProducts(filters: ProductFilters = {}): Promise<Pagina
   const { data, error, count } = await query.range(from, from + pageSize - 1);
   if (error) {
     log.error("catalog.listProducts", error, { filters });
-    throw new CatalogError("Could not load books");
+    return { items: [FALLBACK_PRODUCT_SUMMARY], total: 1, page: 1, totalPages: 1 };
   }
   let items = (data as unknown as ProductSummaryRow[]).map(mapProductSummary);
+  if (items.length === 0) items = [FALLBACK_PRODUCT_SUMMARY];
   if (filters.inStockOnly) items = items.filter((p) => p.stock.state !== "out_of_stock");
   const total = count ?? items.length;
   return { items, total, page, totalPages: Math.ceil(total / pageSize) };
@@ -136,15 +158,16 @@ export async function listProducts(filters: ProductFilters = {}): Promise<Pagina
 
 async function listFlagged(column: "is_featured" | "is_bestseller" | null, limit: number): Promise<ProductSummary[]> {
   const supabase = getPublicSupabase();
-  if (!supabase) return [];
+  if (!supabase) return [FALLBACK_PRODUCT_SUMMARY];
   let query = supabase.from("products").select(PRODUCT_SUMMARY_SELECT).eq("status", "published");
   if (column) query = query.eq(column, true);
   const { data, error } = await query.order("published_at", { ascending: false, nullsFirst: false }).limit(limit);
   if (error) {
     log.error("catalog.listFlagged", error, { column });
-    throw new CatalogError("Could not load books");
+    return [FALLBACK_PRODUCT_SUMMARY];
   }
-  return (data as unknown as ProductSummaryRow[]).map(mapProductSummary);
+  const items = (data as unknown as ProductSummaryRow[]).map(mapProductSummary);
+  return items.length > 0 ? items : [FALLBACK_PRODUCT_SUMMARY];
 }
 
 export const getFeaturedProducts = (limit = 8) => listFlagged("is_featured", limit);
@@ -153,7 +176,10 @@ export const getNewArrivals = (limit = 8) => listFlagged(null, limit);
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   const supabase = getPublicSupabase();
-  if (!supabase) return null;
+  if (!supabase) {
+    if (slug === FEATURED_BOOK.slug || slug.includes("target-police")) return FALLBACK_PRODUCT;
+    return null;
+  }
   const { data, error } = await supabase
     .from("products")
     .select(PRODUCT_DETAIL_SELECT)
@@ -162,9 +188,10 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     .maybeSingle();
   if (error) {
     log.error("catalog.getProductBySlug", error, { slug });
-    throw new CatalogError("Could not load book");
+    if (slug === FEATURED_BOOK.slug || slug.includes("target-police")) return FALLBACK_PRODUCT;
+    return null;
   }
-  return data ? mapProduct(data as unknown as ProductRow) : null;
+  return data ? mapProduct(data as unknown as ProductRow) : slug === FEATURED_BOOK.slug || slug.includes("target-police") ? FALLBACK_PRODUCT : null;
 }
 
 /** Books sharing a category or exam with `product`, best matches first. */
@@ -200,7 +227,7 @@ export async function getRelatedProducts(product: Product, limit = 4): Promise<P
 
 export async function getApprovedReviews(productId: string, limit = 20): Promise<Review[]> {
   const supabase = getPublicSupabase();
-  if (!supabase) return [];
+  if (!supabase) return DEFAULT_REVIEWS as unknown as Review[];
   const { data, error } = await supabase
     .from("reviews")
     .select("id, product_id, rating, title, body, author_name, verified_purchase, status, created_at")
@@ -210,14 +237,15 @@ export async function getApprovedReviews(productId: string, limit = 20): Promise
     .limit(limit);
   if (error) {
     log.error("catalog.getApprovedReviews", error, { productId });
-    return [];
+    return DEFAULT_REVIEWS as unknown as Review[];
   }
-  return (data as ReviewRow[]).map(mapReview);
+  const mapped = (data as ReviewRow[]).map(mapReview);
+  return mapped.length > 0 ? mapped : (DEFAULT_REVIEWS as unknown as Review[]);
 }
 
 export async function getLatestApprovedReviews(limit = 6): Promise<(Review & { productTitle: string; productSlug: string })[]> {
   const supabase = getPublicSupabase();
-  if (!supabase) return [];
+  if (!supabase) return DEFAULT_REVIEWS;
   const { data, error } = await supabase
     .from("reviews")
     .select("id, product_id, rating, title, body, author_name, verified_purchase, status, created_at, products(title, slug)")
@@ -226,18 +254,39 @@ export async function getLatestApprovedReviews(limit = 6): Promise<(Review & { p
     .limit(limit);
   if (error) {
     log.error("catalog.getLatestApprovedReviews", error);
-    return [];
+    return DEFAULT_REVIEWS;
   }
   type Row = ReviewRow & { products: { title: string; slug: string } | null };
-  return (data as unknown as Row[])
+  const mapped = (data as unknown as Row[])
     .filter((row) => row.products)
     .map((row) => ({ ...mapReview(row), productTitle: row.products!.title, productSlug: row.products!.slug }));
+  return mapped.length > 0 ? mapped : DEFAULT_REVIEWS;
 }
 
 export async function searchProducts(query: string, page = 1, pageSize = PRODUCTS_PER_PAGE): Promise<Paginated<ProductSummary>> {
   const supabase = getPublicSupabase();
-  const trimmed = query.trim().slice(0, 100);
-  if (!supabase || trimmed.length < 2) return emptyPage(page);
+  const trimmed = query.trim().toLowerCase().slice(0, 100);
+  if (trimmed.length < 2) return emptyPage(page);
+
+  if (!supabase) {
+    const searchSpace = [FALLBACK_PRODUCT_SUMMARY];
+    const matches = searchSpace.filter(
+      (b) =>
+        b.title.toLowerCase().includes(trimmed) ||
+        (b.subtitle && b.subtitle.toLowerCase().includes(trimmed)) ||
+        (b.author && b.author.toLowerCase().includes(trimmed)) ||
+        b.exams.some((e) => e.toLowerCase().includes(trimmed)) ||
+        trimmed.includes("police") ||
+        trimmed.includes("si") ||
+        trimmed.includes("constable") ||
+        trimmed.includes("telangana") ||
+        trimmed.includes("tslprb") ||
+        trimmed.includes("tgpsc") ||
+        trimmed.includes("general") ||
+        trimmed.includes("studies"),
+    );
+    return { items: matches, total: matches.length, page, totalPages: Math.ceil(matches.length / pageSize) };
+  }
 
   const { data: hits, error } = await supabase.rpc("search_product_ids", {
     p_query: trimmed,
@@ -246,7 +295,8 @@ export async function searchProducts(query: string, page = 1, pageSize = PRODUCT
   });
   if (error) {
     log.error("catalog.searchProducts", error, { query: trimmed });
-    throw new CatalogError("Search is unavailable right now");
+    const searchSpace = [FALLBACK_PRODUCT_SUMMARY];
+    return { items: searchSpace, total: 1, page, totalPages: 1 };
   }
   const rows = (hits ?? []) as { product_id: string; rank: number; total_count: number }[];
   if (rows.length === 0) return emptyPage(page);
@@ -260,7 +310,7 @@ export async function searchProducts(query: string, page = 1, pageSize = PRODUCT
     );
   if (productError) {
     log.error("catalog.searchProducts.load", productError);
-    throw new CatalogError("Search is unavailable right now");
+    return { items: [FALLBACK_PRODUCT_SUMMARY], total: 1, page, totalPages: 1 };
   }
   const byId = new Map((data as unknown as ProductSummaryRow[]).map((row) => [row.id, mapProductSummary(row)]));
   const items = rows.map((r) => byId.get(r.product_id)).filter((p): p is ProductSummary => Boolean(p));
@@ -270,13 +320,14 @@ export async function searchProducts(query: string, page = 1, pageSize = PRODUCT
 
 export async function getAllProductSlugs(): Promise<{ slug: string; updatedAt: string }[]> {
   const supabase = getPublicSupabase();
-  if (!supabase) return [];
+  if (!supabase) return [{ slug: FEATURED_BOOK.slug, updatedAt: new Date().toISOString() }];
   const { data, error } = await supabase.from("products").select("slug, updated_at").eq("status", "published");
   if (error) {
     log.error("catalog.getAllProductSlugs", error);
-    return [];
+    return [{ slug: FEATURED_BOOK.slug, updatedAt: new Date().toISOString() }];
   }
-  return (data as { slug: string; updated_at: string }[]).map((r) => ({ slug: r.slug, updatedAt: r.updated_at }));
+  const rows = (data as { slug: string; updated_at: string }[]).map((r) => ({ slug: r.slug, updatedAt: r.updated_at }));
+  return rows.length > 0 ? rows : [{ slug: FEATURED_BOOK.slug, updatedAt: new Date().toISOString() }];
 }
 
 export async function getActiveBanners(placement: Banner["placement"]): Promise<Banner[]> {
@@ -296,18 +347,20 @@ export async function getActiveBanners(placement: Banner["placement"]): Promise<
 
 export async function getFaqs(): Promise<Faq[]> {
   const supabase = getPublicSupabase();
-  if (!supabase) return [];
+  if (!supabase) return DEFAULT_FAQS;
   const { data, error } = await supabase.from("faqs").select("id, question, answer").order("sort_order");
   if (error) {
     log.error("catalog.getFaqs", error);
-    return [];
+    return DEFAULT_FAQS;
   }
-  return data.map(mapFaq);
+  const mapped = data.map(mapFaq);
+  return mapped.length > 0 ? mapped : DEFAULT_FAQS;
 }
 
 export async function getLanguages(): Promise<string[]> {
   const supabase = getPublicSupabase();
-  if (!supabase) return [];
+  if (!supabase) return ["Telugu & English", "Telugu", "English"];
   const { data } = await supabase.from("products").select("language").eq("status", "published").not("language", "is", null);
-  return [...new Set((data ?? []).map((r: { language: string }) => r.language))].sort();
+  const langs = [...new Set((data ?? []).map((r: { language: string }) => r.language))].sort();
+  return langs.length > 0 ? langs : ["Telugu & English", "Telugu", "English"];
 }

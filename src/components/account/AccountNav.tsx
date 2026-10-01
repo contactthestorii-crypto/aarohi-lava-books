@@ -12,7 +12,7 @@ const LINKS = [
 ];
 
 export function AccountNav() {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? '';
   return (
     <nav aria-label="Account" className="scrollbar-none -mx-4 flex gap-1 overflow-x-auto px-4 lg:mx-0 lg:flex-col lg:px-0">
       {LINKS.map((link) => {

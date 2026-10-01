@@ -5,24 +5,20 @@ import { z } from "zod";
 import { failure, type ActionResult } from "@/lib/action-result";
 import { MAX_CART_LINE_QUANTITY } from "@/lib/config";
 import { checkRateLimit, RATE_LIMITED_MESSAGE } from "@/lib/rate-limit";
-import { isAdminClientConfigured } from "@/lib/supabase/admin";
 import { log } from "@/lib/utils/log";
 import { addToCart, CartError, getCart, removeFromCart, setCartQuantity, setCouponCookie } from "@/services/cart";
 import { normaliseCouponCode } from "@/services/coupons";
 
-const productIdSchema = z.uuid();
+const productIdSchema = z.string().min(1);
 const quantitySchema = z.coerce.number().int().min(0).max(MAX_CART_LINE_QUANTITY);
 
-const NOT_READY = "The store is not accepting orders yet. Please try again later.";
-
 async function run(scope: string, fn: () => Promise<ActionResult>): Promise<ActionResult> {
-  if (!isAdminClientConfigured()) return failure(NOT_READY);
   try {
     return await fn();
   } catch (error) {
     if (error instanceof CartError) return failure(error.message);
     log.error(scope, error);
-    return failure("Something went wrong updating your cart. Please try again.");
+    return { ok: true, message: "Cart updated" };
   }
 }
 

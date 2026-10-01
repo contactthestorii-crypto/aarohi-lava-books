@@ -27,6 +27,21 @@ export function BookGallery({
   const [lens, setLens] = useState<{ x: number; y: number } | null>(null);
 
   if (images.length === 0) {
+    const isTargetPolice = title.toLowerCase().includes("target police");
+    if (isTargetPolice) {
+      return (
+        <div className="relative mx-auto aspect-[3/4] w-full max-w-md overflow-hidden rounded-[var(--radius-card)] bg-navy-50/60 p-4 shadow-[var(--shadow-card)]">
+          <Image
+            src="/images/ecommerce/target-police-3d.jpg"
+            alt={`${title} 3D Cover Mockup`}
+            fill
+            priority
+            sizes="(min-width: 1024px) 480px, 100vw"
+            className="object-contain p-2 drop-shadow-[0_12px_24px_rgb(16_33_77/0.25)]"
+          />
+        </div>
+      );
+    }
     return (
       <div className="mx-auto aspect-[3/4] w-full max-w-md overflow-hidden rounded-[var(--radius-card)] shadow-[var(--shadow-card)]">
         <TypographicCover product={{ title, subtitle, author, exams }} />
