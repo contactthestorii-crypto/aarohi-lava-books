@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, Hanken_Grotesk } from "next/font/google";
-import { TestModeBanner } from "@/components/layout/TestModeBanner";
 import { ToastProvider } from "@/components/ui/Toast";
 import { siteUrl } from "@/lib/config";
 import "./globals.css";
@@ -45,7 +44,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-IN" className={`${archivo.variable} ${hanken.variable}`}>
       <body className="min-h-dvh bg-white antialiased">
-        <TestModeBanner />
         <ToastProvider>{children}</ToastProvider>
       </body>
     </html>
