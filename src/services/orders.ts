@@ -20,7 +20,8 @@ export type OrderStatus = typeof OrderStatus[keyof typeof OrderStatus];
 
 /** Fetch all orders – used by the admin UI. */
 export async function getOrders() {
-  const { data, error } = await supabase.from('orders').select('*');
+  const { getAdminSupabase } = await import('@/lib/supabase/admin');
+  const { data, error } = await getAdminSupabase().from('orders').select('*');
   if (error) throw error;
   return data;
 }
