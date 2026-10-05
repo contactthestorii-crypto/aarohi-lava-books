@@ -136,11 +136,11 @@ export function Hero({
                 >
                   <div className="relative w-full aspect-[1/1.42] rounded-xl overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.65)] ring-1 ring-white/10 group-hover:ring-gold-400/50 group-hover:shadow-[0_25px_50px_rgba(217,119,6,0.3)] transition-all">
                     <Image
-                      src="/images/books/target-police-english.jpg"
+                      src="/images/books/target-police-3d-english.jpg"
                       alt="Target Police 360 General Studies - English Medium"
                       fill
                       sizes="(min-width: 1024px) 25vw, 45vw"
-                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                      className="object-contain object-center p-1 transition-transform duration-500 group-hover:scale-105"
                       priority
                     />
                     {/* Badge on cover */}
