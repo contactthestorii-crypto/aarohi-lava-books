@@ -1,5 +1,5 @@
-import { ArrowRight, CheckCircle, Package, Target } from "@phosphor-icons/react/ssr";
-import Link from "next/link";
+import { ArrowRight, Package } from "@phosphor-icons/react/ssr";
+import Image from "next/image";
 import { ButtonLink } from "@/components/ui/Button";
 import type { ShowcaseBook } from "@/lib/content/showcase";
 
@@ -28,60 +28,17 @@ export function Hero({ title, subtitle, book, linkable }: { title: string; subti
           </div>
         </div>
 
-        <BookInsightPanel book={book} linkable={linkable} />
+        <div className="relative w-full aspect-[16/9] lg:aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.4)]">
+          <Image
+            src="/images/ecommerce/new-hero-banner.jpg"
+            alt="Target Police Book Highlights"
+            fill
+            priority
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover"
+          />
+        </div>
       </div>
     </section>
-  );
-}
-
-function BookInsightPanel({ book, linkable }: { book: ShowcaseBook; linkable: boolean }) {
-  return (
-    <article
-      aria-label={`${book.brand} highlights`}
-      className="relative mx-auto w-full max-w-md overflow-hidden rounded-[var(--radius-card)] bg-white text-ink shadow-[0_24px_60px_rgb(0_0_0/0.35)]"
-    >
-      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1.5 bg-red-600 px-4 py-2.5 text-white sm:px-5">
-        <p className="whitespace-nowrap text-sm font-bold">For {book.exams.join(" | ")}</p>
-        {book.edition ? <span className="whitespace-nowrap rounded-full bg-gold-400 px-2.5 py-0.5 text-xs font-extrabold text-ink">{book.edition}</span> : null}
-      </div>
-      <div className="p-4 sm:p-6">
-        <div className="flex items-start gap-2.5 sm:gap-3">
-          <Target size={40} weight="duotone" className="size-8 shrink-0 text-red-600 sm:size-10" />
-          <div>
-            <p className="whitespace-nowrap font-display-condensed text-[2rem] font-extrabold uppercase leading-none tracking-tight text-navy-900 sm:text-4xl">{book.brand}</p>
-            {book.title ? <p className="mt-1.5 font-display text-lg font-extrabold leading-tight">{book.title}</p> : null}
-            {book.subtitle ? <p className="text-sm font-semibold uppercase tracking-wide text-navy-700">{book.subtitle}</p> : null}
-          </div>
-        </div>
-
-        {book.highlights.length > 0 ? (
-          <ul className="mt-5 space-y-2.5 border-t border-line pt-4 text-sm">
-            {book.highlights.slice(0, 4).map((h) => (
-              <li key={h.body} className="flex gap-2.5">
-                <CheckCircle size={18} weight="fill" className="mt-0.5 shrink-0 text-success" />
-                <span>
-                  {h.title ? <span className="font-semibold">{h.title}: </span> : null}
-                  {h.body}
-                </span>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-
-        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 border-t border-line pt-4">
-          {book.author ? (
-            <p className="text-sm text-muted">
-              By <span className="font-semibold text-ink">{book.author}</span>
-              {book.authorNote ? ` (${book.authorNote})` : ""}
-            </p>
-          ) : (
-            <span />
-          )}
-          <Link href={linkable ? `/books/${book.slug}` : "#whats-inside"} className="inline-flex items-center gap-1 text-sm font-bold text-navy-700 hover:underline">
-            {linkable ? "View book" : "What's inside"} <ArrowRight size={14} weight="bold" />
-          </Link>
-        </div>
-      </div>
-    </article>
   );
 }
