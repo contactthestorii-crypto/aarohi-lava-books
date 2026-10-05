@@ -47,7 +47,7 @@ export function Hero({ title, subtitle, book, linkable }: { title: string; subti
             <div className="mt-10 flex flex-wrap gap-4">
               <ButtonLink 
                 href="/books" 
-                size="xl" 
+                size="lg" 
                 icon={<ArrowRight size={20} weight="bold" />} 
                 className="flex-row-reverse bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 shadow-[0_0_30px_rgba(220,38,38,0.4)] hover:shadow-[0_0_40px_rgba(220,38,38,0.6)] hover:-translate-y-1 transition-all rounded-xl font-black uppercase tracking-wider"
               >
@@ -56,7 +56,7 @@ export function Hero({ title, subtitle, book, linkable }: { title: string; subti
               
               <ButtonLink 
                 href="/track-order" 
-                size="xl" 
+                size="lg" 
                 variant="inverse" 
                 icon={<Package size={20} weight="bold" />}
                 className="border-white/30 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-xl font-bold uppercase tracking-wider hover:-translate-y-1 transition-all"
