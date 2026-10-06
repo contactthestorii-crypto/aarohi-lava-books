@@ -1,4 +1,4 @@
-import { ArrowRight, CheckCircle, Package, ShieldCheck, ShoppingCart, Sparkle, Star } from "@phosphor-icons/react/ssr";
+import { ArrowRight, CheckCircle, Package, ShieldCheck, ShoppingCart, Star } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import Link from "next/link";
 import { ButtonLink } from "@/components/ui/Button";
@@ -16,19 +16,19 @@ export function Hero({
   return (
     <section className="relative w-full overflow-hidden bg-[#02040a] text-white border-b border-white/10">
       
-      {/* 1. Obsidian Dark Studio Lighting & Spotlights */}
+      {/* 1. Deep Obsidian Studio Lighting & Spotlights */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden select-none">
-        {/* Overhead Gold Spotlight on Books (Right Side) */}
-        <div className="absolute -top-32 right-1/4 h-[42rem] w-[42rem] rounded-full bg-amber-400/[0.12] blur-[140px]" />
-        {/* Subtle Crimson Accent Spotlight (Left Side) */}
+        {/* Warm Golden Overhead Spotlight Centered on Books */}
+        <div className="absolute -top-32 right-1/4 h-[44rem] w-[44rem] rounded-full bg-amber-400/[0.14] blur-[140px]" />
+        {/* Subtle Crimson Accent on Left Side */}
         <div className="absolute top-1/4 -left-32 h-[36rem] w-[36rem] rounded-full bg-red-600/[0.12] blur-[150px]" />
-        {/* Deep Studio Ambient Glow */}
+        {/* Bottom Ambient Glow */}
         <div className="absolute -bottom-40 left-1/2 -translate-x-1/2 h-[30rem] w-[60rem] rounded-full bg-blue-600/[0.08] blur-[160px]" />
         
         {/* Dark Reflective Studio Floor Gradient */}
         <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-black via-black/60 to-transparent" />
         
-        {/* Micro-dot Luxury Grid Texture */}
+        {/* Micro-dot Luxury Studio Texture */}
         <div className="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] opacity-70" />
       </div>
 
@@ -127,12 +127,12 @@ export function Hero({
 
           </div>
 
-          {/* RIGHT SIDE: The 3D Books Spotlight Showcase (100% Focused & Pristine) */}
-          <div className="lg:col-span-5 flex justify-center items-center">
-            <div className="relative w-full max-w-md sm:max-w-lg py-4">
+          {/* RIGHT SIDE: The Matching 3D Dual-Book Studio Mockup */}
+          <div className="lg:col-span-5 flex flex-col items-center justify-center">
+            <div className="relative w-full max-w-lg">
               
               {/* Floating Rating Badge */}
-              <div className="absolute -top-4 right-2 sm:right-6 z-30 flex items-center gap-1.5 rounded-full bg-[#0a1124]/90 border border-gold-400/40 px-3.5 py-1 shadow-[0_10px_25px_rgba(0,0,0,0.8)] backdrop-blur-xl">
+              <div className="absolute -top-4 right-4 z-30 flex items-center gap-1.5 rounded-full bg-[#0a1124]/90 border border-gold-400/40 px-3.5 py-1 shadow-[0_10px_25px_rgba(0,0,0,0.8)] backdrop-blur-xl">
                 <div className="flex text-gold-400">
                   <Star size={13} weight="fill" />
                   <Star size={13} weight="fill" />
@@ -143,88 +143,80 @@ export function Hero({
                 <span className="text-xs font-bold text-slate-100">4.9 / 5.0 Rating</span>
               </div>
 
-              {/* Books Grid */}
-              <div className="grid grid-cols-2 gap-4 sm:gap-6 items-end">
+              {/* 3D Dual-Book Mockup Card */}
+              <div className="relative w-full aspect-[1200/896] rounded-2xl overflow-hidden shadow-[0_35px_80px_rgba(0,0,0,0.95)] ring-1 ring-white/10 group transition-all duration-500 hover:-translate-y-2">
                 
-                {/* 1. English Edition (Authentic 3D Mockup with Spine) */}
+                {/* Photorealistic 3D Render Image */}
+                <Image
+                  src="/images/books/dual-books-3d-mockup.jpg"
+                  alt="Target Police 360° Explanation of General Studies - English and Telugu Editions 3D Mockup"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 42vw, 90vw"
+                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                />
+
+                {/* Interactive Hotspot 1: English Book (Left Side of Image) */}
                 <Link
                   href="/books/target-police-general-studies-tslprb-tgpsc"
-                  className="group relative flex flex-col items-center cursor-pointer transition-all duration-500 hover:-translate-y-4"
+                  aria-label="Order English Edition"
+                  title="Click to view English Edition"
+                  className="absolute rounded-xl transition-all duration-300 cursor-pointer hover:ring-2 hover:ring-gold-400/70 hover:bg-gold-400/5 focus:outline-none"
+                  style={{
+                    left: "8%",
+                    top: "8%",
+                    width: "42%",
+                    height: "82%",
+                  }}
                 >
-                  {/* Book Card with Deep Studio Shadow */}
-                  <div className="relative w-full aspect-[682/1024] rounded-2xl overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.95)] ring-1 ring-white/10 group-hover:ring-gold-400/60 group-hover:shadow-[0_35px_80px_rgba(217,119,6,0.35)] transition-all bg-[#040816]">
-                    <Image
-                      src="/images/books/target-police-3d-english.jpg"
-                      alt="Target Police 360° Explanation of General Studies - English Medium"
-                      fill
-                      priority
-                      sizes="(min-width: 1024px) 25vw, 45vw"
-                      className="object-contain p-0.5 transition-transform duration-500 group-hover:scale-105"
-                    />
-                    
-                    {/* Badge */}
-                    <span className="absolute top-2.5 left-2.5 rounded-md bg-[#02040a]/90 border border-gold-400/40 px-2 py-0.5 text-[10px] sm:text-xs font-black uppercase text-gold-400 shadow-md backdrop-blur-md">
-                      English
-                    </span>
-                  </div>
-
-                  {/* Floor Reflection Effect */}
-                  <div className="w-[85%] h-6 bg-gradient-to-b from-amber-500/10 to-transparent blur-md -mt-2 rounded-full pointer-events-none" />
-
-                  {/* Title & View CTA */}
-                  <div className="mt-2 text-center">
-                    <p className="text-xs sm:text-sm font-extrabold uppercase text-white tracking-wider group-hover:text-gold-400 transition-colors">
-                      ENGLISH MEDIUM
-                    </p>
-                    <span className="text-[11px] sm:text-xs text-gold-400 font-bold inline-flex items-center gap-1 group-hover:underline mt-0.5">
-                      View details <ArrowRight size={12} weight="bold" />
-                    </span>
+                  <span className="sr-only">View English Edition</span>
+                  <div className="absolute top-3 left-3 rounded-md bg-[#02040a]/85 border border-gold-400/40 px-2 py-0.5 text-[10px] font-black uppercase text-gold-400 shadow-md">
+                    English
                   </div>
                 </Link>
 
-                {/* 2. Telugu Edition (Authentic High-Res Cover with Realistic 3D Paperback Styling) */}
+                {/* Interactive Hotspot 2: Telugu Book (Right Side of Image) */}
                 <Link
                   href="/books/target-police-general-studies-telugu"
-                  className="group relative flex flex-col items-center cursor-pointer transition-all duration-500 hover:-translate-y-4"
+                  aria-label="Order Telugu Edition"
+                  title="Click to view Telugu Edition"
+                  className="absolute rounded-xl transition-all duration-300 cursor-pointer hover:ring-2 hover:ring-red-500/70 hover:bg-red-500/5 focus:outline-none"
+                  style={{
+                    left: "50%",
+                    top: "8%",
+                    width: "42%",
+                    height: "82%",
+                  }}
                 >
-                  {/* Book Card with Deep Studio Shadow */}
-                  <div className="relative w-full aspect-[682/1024] rounded-2xl overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.95)] ring-1 ring-white/10 group-hover:ring-red-500/60 group-hover:shadow-[0_35px_80px_rgba(220,38,38,0.35)] transition-all bg-[#040816]">
-                    <Image
-                      src="/images/books/target-police-telugu.jpg"
-                      alt="Target Police 360° Explanation of General Studies - Telugu Medium"
-                      fill
-                      priority
-                      sizes="(min-width: 1024px) 25vw, 45vw"
-                      className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                    />
-
-                    {/* Realistic 3D Spine Depth on Left Edge */}
-                    <div className="pointer-events-none absolute inset-y-0 left-0 w-3 bg-gradient-to-r from-black/70 via-black/25 to-transparent z-10" />
-
-                    {/* Badge */}
-                    <span className="absolute top-2.5 left-2.5 rounded-md bg-[#02040a]/90 border border-red-500/40 px-2 py-0.5 text-[10px] sm:text-xs font-black uppercase text-red-400 shadow-md backdrop-blur-md">
-                      తెలుగు Medium
-                    </span>
-                  </div>
-
-                  {/* Floor Reflection Effect */}
-                  <div className="w-[85%] h-6 bg-gradient-to-b from-red-500/10 to-transparent blur-md -mt-2 rounded-full pointer-events-none" />
-
-                  {/* Title & View CTA */}
-                  <div className="mt-2 text-center">
-                    <p className="text-xs sm:text-sm font-extrabold uppercase text-white tracking-wider group-hover:text-red-400 transition-colors">
-                      TELUGU MEDIUM
-                    </p>
-                    <span className="text-[11px] sm:text-xs text-gold-400 font-bold inline-flex items-center gap-1 group-hover:underline mt-0.5">
-                      View details <ArrowRight size={12} weight="bold" />
-                    </span>
+                  <span className="sr-only">View Telugu Edition</span>
+                  <div className="absolute top-3 left-3 rounded-md bg-[#02040a]/85 border border-red-500/40 px-2 py-0.5 text-[10px] font-black uppercase text-red-400 shadow-md">
+                    తెలుగు Medium
                   </div>
                 </Link>
 
               </div>
 
-              {/* In-Stock Dispatch Callout */}
-              <div className="mt-6 flex items-center justify-center gap-2 text-center text-xs text-slate-400">
+              {/* Action Buttons Below Dual-Book Mockup */}
+              <div className="mt-4 grid grid-cols-2 gap-3 w-full">
+                <Link
+                  href="/books/target-police-general-studies-tslprb-tgpsc"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-gold-400/30 bg-white/[0.04] py-2 px-3 text-xs font-bold text-slate-200 hover:text-gold-400 hover:border-gold-400/60 hover:bg-white/[0.08] transition-all"
+                >
+                  <span>English Edition</span>
+                  <ArrowRight size={12} weight="bold" />
+                </Link>
+
+                <Link
+                  href="/books/target-police-general-studies-telugu"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-red-500/30 bg-white/[0.04] py-2 px-3 text-xs font-bold text-slate-200 hover:text-red-400 hover:border-red-500/60 hover:bg-white/[0.08] transition-all"
+                >
+                  <span>తెలుగు Edition</span>
+                  <ArrowRight size={12} weight="bold" />
+                </Link>
+              </div>
+
+              {/* In-Stock Dispatch Note */}
+              <div className="mt-4 flex items-center justify-center gap-2 text-center text-xs text-slate-400">
                 <span className="inline-block h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
                 <span className="font-medium text-slate-300">In Stock • Dispatches in 24 Hours directly from publisher</span>
               </div>
@@ -251,7 +243,7 @@ export function Hero({
               <CheckCircle size={18} weight="fill" className="text-gold-400 shrink-0" />
               <span>TSLPRB &amp; TGPSC Solved Papers</span>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2.5">
               <Package size={18} weight="fill" className="text-blue-400 shrink-0" />
               <span>Fast Courier Across Telangana</span>
             </div>
