@@ -1,11 +1,9 @@
 import { OrderAdminForms } from '@/components/admin/OrderAdminForms';
 import { getOrders } from '@/services/orders';
-import { getSettings } from '@/services/settings';
 
 export const dynamic = 'force-dynamic';
 
 export default async function OrdersAdminPage() {
-  const settings = await getSettings();
   const orders = await getOrders();
 
   return (

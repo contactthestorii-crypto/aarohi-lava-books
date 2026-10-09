@@ -166,7 +166,7 @@ export function AdminNoteForm({ orderId, note, needsAttention }: { orderId: stri
 }
 
 // Exported component for admin order display
-export function OrderAdminForms({ order }: { order: any }) {
+export function OrderAdminForms({ order }: { order: Record<string, unknown> | unknown }) {
   return (
     <div className="p-4 border rounded bg-white shadow">
       {/* Placeholder UI – you can replace with a richer layout later */}

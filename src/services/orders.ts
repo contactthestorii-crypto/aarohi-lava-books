@@ -45,7 +45,7 @@ export async function cancelOrder(
   orderId: string,
   reason: string,
   actor: string,
-  restock: boolean = false,
+  _restock: boolean = false,
 ): Promise<void> {
   const { error } = await supabase
     .from('orders')
@@ -115,7 +115,7 @@ export async function finalizeOnlinePayment(payload: {
   providerOrderId: string;
   providerPaymentId: string;
   amountPaise: number;
-  raw: any;
+  raw?: Record<string, unknown> | unknown;
 }): Promise<void> {
   const { orderId } = payload;
   const { error } = await supabase
@@ -148,6 +148,6 @@ export async function recordRefund(orderId: string, amountPaise: number, reason:
 }
 
 /** Hook after order confirmation – currently no side effects. */
-export async function afterOrderConfirmed(orderId: string, eventName?: string): Promise<void> {
+export async function afterOrderConfirmed(_orderId: string, _eventName?: string): Promise<void> {
   // No action needed for now.
 }

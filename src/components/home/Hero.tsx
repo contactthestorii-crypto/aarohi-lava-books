@@ -132,10 +132,7 @@ const SLIDES: SlideData[] = [
   },
 ];
 
-export function Hero({
-  title,
-  subtitle,
-}: {
+export function Hero(_props: {
   title?: string;
   subtitle?: string;
   book?: ShowcaseBook;

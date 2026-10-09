@@ -6,7 +6,7 @@ const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'mock-key
 const isMock = SUPABASE_URL.includes('mock.supabase.co');
 
 const customFetch = isMock
-  ? async (url: RequestInfo | URL, init?: RequestInit) => {
+  ? async (_url: RequestInfo | URL, _init?: RequestInit) => {
       // Return empty array for any supabase query to bypass build errors
       return new Response(JSON.stringify([]), {
         status: 200,
