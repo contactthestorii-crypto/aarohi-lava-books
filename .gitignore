@@ -50,3 +50,6 @@ next-env.d.ts
 /*.png
 
 .vercel
+
+# agent skills
+.agents/
