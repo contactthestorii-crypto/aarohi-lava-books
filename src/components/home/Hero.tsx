@@ -43,21 +43,21 @@ const SLIDES: SlideData[] = [
   // Slide 1: Dual Edition Flagship Showcase
   {
     id: "dual-edition",
-    badge: "TSLPRB & TGPSC • OFFICIAL 2026 EDITION",
+    badge: "UPSC • TGPSC • TSLPRB • APPSC • OFFICIAL 2026 EDITION",
     badgeColor: "border-gold-400/40 bg-gold-400/10 text-gold-400",
     titleLine1: "PREPARE SMARTER.",
     titleLine2: "SCORE BETTER.",
     titleGradient: "from-gold-300 via-gold-400 to-amber-500",
     subtitle:
-      "The definitive 360° General Studies preparation guide with 10 years of solved question papers for Telangana Sub-Inspector (Prelims & Mains).",
-    pricePaise: 80900,
+      "The definitive 360° General Studies preparation guide with solved question papers for UPSC, TGPSC, TSLPRB, APPSC and Other State Exams.",
+    pricePaise: 79900,
     mrpPaise: 89900,
-    discountBadge: "10% OFF Special Launch",
+    discountBadge: "Save ₹100 • Special Launch",
     highlights: [
-      "Prelims & Mains Solved Papers",
-      "2026 Budget & Survey Included",
+      "UPSC, TGPSC, TSLPRB & APPSC Solved Papers",
+      "2026 Budget & Economic Survey Included",
       "Topic-wise 360° Explanations",
-      "Fast Direct Delivery Across TS",
+      "Fast Direct Delivery Across TS & AP",
     ],
     primaryBtnText: "ORDER ENGLISH EDITION",
     primaryBtnHref: "/books/target-police-general-studies-tslprb-tgpsc",
@@ -75,16 +75,16 @@ const SLIDES: SlideData[] = [
     id: "english-edition",
     badge: "ENGLISH MEDIUM • COMPREHENSIVE 360° GS",
     badgeColor: "border-blue-400/40 bg-blue-500/10 text-blue-300",
-    titleLine1: "CRACK TSLPRB SI.",
+    titleLine1: "ALL COMPETITIVE EXAMS.",
     titleLine2: "COMPLETE 360° GS.",
     titleGradient: "from-blue-200 via-blue-400 to-cyan-300",
     subtitle:
-      "All Telangana Sub-Inspector previous papers with in-depth general studies analysis. Includes Central & State Budgets 2026-27, Socio-Economic Survey, and Current Affairs.",
-    pricePaise: 80900,
+      "General Studies previous papers with in-depth analysis for UPSC, TGPSC, TSLPRB, APPSC & Other State Exams. Includes Budgets 2026-27, Socio-Economic Survey, and Current Affairs.",
+    pricePaise: 79900,
     mrpPaise: 89900,
-    discountBadge: "10% OFF Launch Offer",
+    discountBadge: "Special Price: ₹799",
     highlights: [
-      "Topic-wise PYQs (2012-2024)",
+      "Topic-wise Solved PYQs",
       "High-Yield Concept Clarity",
       "Socio-Economic Survey 2026",
       "Direct Publisher Dispatch",
@@ -105,19 +105,19 @@ const SLIDES: SlideData[] = [
     id: "telugu-edition",
     badge: "తెలుగు మీడియం • ప్రత్యేక ముద్రణ 2026",
     badgeColor: "border-red-400/40 bg-red-500/10 text-red-300",
-    titleLine1: "లక్ష్యం పోలీస్ ఉద్యోగం.",
+    titleLine1: "లక్ష్యం ప్రభుత్వ ఉద్యోగం.",
     titleLine2: "360° జనరల్ స్టడీస్.",
     titleGradient: "from-red-200 via-amber-300 to-gold-400",
     subtitle:
-      "తెలంగాణ సబ్-ఇన్‌స్పెక్టర్ గత పరీక్షా పత్రాలు (ప్రిలిమ్స్ & మెయిన్స్) 360° సమగ్ర వివరణతో. తెలంగాణ చరిత్ర, ఉద్యమం, సామాజిక సర్వే 2026 మరియు రాష్ట్ర బడ్జెట్ అంశాలతో.",
-    pricePaise: 80900,
+      "UPSC, TGPSC, TSLPRB, APPSC & ఇతర పోటీ పరీక్షల గత ప్రశ్నా పత్రాలు 360° సమగ్ర వివరణతో. తెలంగాణ చరిత్ర, ఉద్యమం, సామాజిక సర్వే 2026 మరియు రాష్ట్ర బడ్జెట్ అంశాలతో.",
+    pricePaise: 79900,
     mrpPaise: 89900,
-    discountBadge: "10% ప్రత్యేక రాయితీ",
+    discountBadge: "ప్రత్యేక ధర: ₹799",
     highlights: [
       "ప్రిలిమ్స్ & మెయిన్స్ సాల్వ్డ్ పేపర్స్",
       "టాపిక్-వైజ్ 360° సమగ్ర వివరణలు",
       "2026-27 రాష్ట్ర, కేంద్ర బడ్జెట్",
-      "తెలంగాణ వ్యాప్తంగా వేగవంతమైన డెలివరీ",
+      "తెలంగాణ & AP వ్యాప్తంగా వేగవంతమైన డెలివరీ",
     ],
     primaryBtnText: "ఆర్డర్ చేయండి - TELUGU EDITION",
     primaryBtnHref: "/books/target-police-general-studies-telugu",
@@ -216,8 +216,8 @@ export function Hero(_props: {
             {/* Studio Launch Price Card */}
             <div className="mt-6 flex flex-wrap items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 sm:px-5 backdrop-blur-2xl shadow-[0_20px_40px_rgba(0,0,0,0.6)]">
               <div className="flex items-baseline gap-2.5">
-                <span className="text-3xl font-black text-gold-400 tracking-tight">₹809</span>
-                <span className="text-base text-slate-500 line-through">₹899</span>
+                <span className="text-3xl font-black text-gold-400 tracking-tight">₹{Math.round(slide.pricePaise / 100)}</span>
+                <span className="text-base text-slate-500 line-through">₹{Math.round(slide.mrpPaise / 100)}</span>
               </div>
               <span className="rounded-full bg-emerald-500/20 border border-emerald-500/40 px-3 py-0.5 text-xs font-black uppercase tracking-wider text-emerald-400">
                 {slide.discountBadge}
@@ -345,7 +345,7 @@ export function Hero(_props: {
               <span>In Stock • Ships in 24 Hours</span>
             </span>
             <span className="text-white/20">|</span>
-            <span>Telangana SI (Prelims &amp; Mains) Solved Papers</span>
+            <span>UPSC • TGPSC • TSLPRB • APPSC Solved Papers</span>
           </div>
 
           {/* Indicator Pills Center */}

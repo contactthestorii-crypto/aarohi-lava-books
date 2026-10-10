@@ -77,7 +77,7 @@ export default async function HomePage() {
 
       <Section
         title="Browse by Exam Category"
-        description="Official preparation materials and previous solved question papers for Telangana state recruitment boards."
+        description="Official preparation materials and previous solved question papers for UPSC, TGPSC, TSLPRB, APPSC and other competitive exams."
         id="exams"
       >
         <ExamTiles exams={effectiveExams} />
@@ -85,7 +85,7 @@ export default async function HomePage() {
 
       <Section
         title="Featured Official Publication"
-        description="Our flagship 360° General Studies solved papers guide for Telangana Sub-Inspector and competitive exams."
+        description="Our flagship 360° General Studies solved papers guide for UPSC, TGPSC, TSLPRB, APPSC and competitive exams."
         id="featured"
       >
         <Spotlight product={effectiveSpotlight} />
