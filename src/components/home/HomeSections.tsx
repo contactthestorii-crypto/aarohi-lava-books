@@ -1,11 +1,18 @@
 import {
+  ArrowRight,
   ArrowUpRight,
+  BookOpen,
   BookOpenText,
+  Briefcase,
   ChatCircleText,
   CreditCard,
+  FileText,
+  Folders,
+  GraduationCap,
   MapPinLine,
   Package,
   SealCheck,
+  ShieldCheck,
   Star,
 } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
@@ -13,24 +20,71 @@ import Link from "next/link";
 import { ButtonLink } from "@/components/ui/Button";
 import type { Category, Faq, Product, Review } from "@/types";
 
-/** Large navy tiles, one per exam category. */
+const EXAM_META: Record<
+  string,
+  {
+    badge: string;
+    tag: string;
+    icon: React.ComponentType<{ size?: number; className?: string; weight?: "bold" | "fill" | "duotone" }>;
+  }
+> = {
+  upsc: { badge: "Civil Services", tag: "GS Paper I & II Focus", icon: GraduationCap },
+  tgpsc: { badge: "Group 1, 2, 3, 4", tag: "State Services Solved Papers", icon: FileText },
+  tslprb: { badge: "Police Recruitment", tag: "SI & Constable 2012–2024 PYQs", icon: ShieldCheck },
+  appsc: { badge: "Andhra Pradesh PSC", tag: "Executive & Non-Executive Exams", icon: Briefcase },
+  "other-state-exams": { badge: "State & Central", tag: "Recruitment Boards Question Bank", icon: Folders },
+};
+
+/** Authoritative cards for each competitive exam category. */
 export function ExamTiles({ exams }: { exams: Category[] }) {
   return (
-    <ul className="grid grid-cols-2 gap-3 md:grid-cols-4">
-      {exams.map((exam, index) => (
-        <li key={exam.id} className={index === 0 && exams.length % 2 === 1 ? "col-span-2 md:col-span-1" : undefined}>
-          <Link
-            href={`/categories/${exam.slug}`}
-            className="group flex h-full min-h-32 flex-col justify-between rounded-[var(--radius-card)] bg-navy-900 p-5 text-white transition-colors hover:bg-navy-800"
-          >
-            <span className="font-display-condensed text-2xl font-extrabold uppercase leading-none md:text-3xl">{exam.name}</span>
-            <span className="mt-4 flex items-end justify-between gap-2 text-sm text-navy-200">
-              <span className="line-clamp-2">{exam.description ?? "Books and previous papers"}</span>
-              <ArrowUpRight size={20} weight="bold" className="shrink-0 text-gold-400 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </span>
-          </Link>
-        </li>
-      ))}
+    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+      {exams.map((exam) => {
+        const meta = EXAM_META[exam.slug] ?? {
+          badge: "Competitive Exam",
+          tag: "Solved Papers & Guides",
+          icon: FileText,
+        };
+        const Icon = meta.icon;
+
+        return (
+          <li key={exam.id}>
+            <Link
+              href={`/categories/${exam.slug}`}
+              className="group flex h-full min-h-[180px] flex-col justify-between rounded-2xl border border-line/90 bg-gradient-to-b from-navy-900 to-navy-950 p-5 text-white transition-all duration-300 hover:-translate-y-1 hover:border-gold-400/60 hover:shadow-xl"
+            >
+              <div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Icon size={18} weight="bold" className="text-gold-400" />
+                    <span className="rounded-md bg-white/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-wider text-gold-300">
+                      {meta.badge}
+                    </span>
+                  </div>
+                  <ArrowUpRight
+                    size={18}
+                    weight="bold"
+                    className="text-slate-400 transition-transform group-hover:text-gold-400 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                  />
+                </div>
+
+                <h3 className="mt-3 font-display text-2xl font-black uppercase tracking-tight text-white group-hover:text-gold-300 transition-colors">
+                  {exam.name}
+                </h3>
+
+                <p className="mt-1 text-xs text-navy-200 font-medium">
+                  {meta.tag}
+                </p>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-300">
+                <span>View Books & Papers</span>
+                <span className="font-bold text-gold-400">→</span>
+              </div>
+            </Link>
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -86,21 +140,40 @@ export function WhyBuyDirect() {
   );
 }
 
-/** Horizontal-scroll pills for subject categories. */
+/** Structured Academic Curriculum Grid for the 11 General Studies subjects. */
 export function SubjectChips({ subjects }: { subjects: Category[] }) {
   return (
-    <ul className="scrollbar-none -mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:overflow-visible md:px-0">
-      {subjects.map((subject) => (
-        <li key={subject.id} className="shrink-0">
-          <Link
-            href={`/categories/${subject.slug}`}
-            className="inline-flex h-11 items-center rounded-full border border-line bg-white px-4 text-sm font-semibold text-navy-900 transition-colors hover:border-navy-700 hover:bg-navy-50"
-          >
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      {subjects.map((subject, idx) => (
+        <Link
+          key={subject.id}
+          href={`/categories/${subject.slug}`}
+          className="group flex flex-col justify-between rounded-xl border border-line bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-navy-700 hover:shadow-md"
+        >
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex items-center gap-1.5 text-slate-400">
+              <BookOpen size={13} weight="bold" className="text-navy-700" />
+              <span className="text-[11px] font-bold">
+                Module {String(idx + 1).padStart(2, "0")}
+              </span>
+            </div>
+            <ArrowRight
+              size={14}
+              weight="bold"
+              className="text-slate-300 transition-transform group-hover:translate-x-1 group-hover:text-navy-900"
+            />
+          </div>
+
+          <p className="mt-2 text-sm font-bold text-navy-950 group-hover:text-navy-700 transition-colors leading-snug">
             {subject.name}
-          </Link>
-        </li>
+          </p>
+
+          <span className="mt-2 text-[11px] text-muted font-medium">
+            360° Syllabus Notes &amp; PYQs
+          </span>
+        </Link>
       ))}
-    </ul>
+    </div>
   );
 }
 

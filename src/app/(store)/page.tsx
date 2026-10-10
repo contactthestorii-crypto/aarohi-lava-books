@@ -1,4 +1,5 @@
 import { AspirantSuccessSection } from "@/components/home/AspirantSuccessSection";
+import { DualBookShowcase } from "@/components/home/DualBookShowcase";
 import { EcommerceUspStrip } from "@/components/home/EcommerceUspStrip";
 import { Hero } from "@/components/home/Hero";
 import {
@@ -11,7 +12,6 @@ import {
 } from "@/components/home/HomeSections";
 import { InsideBookPreviewSection } from "@/components/home/InsideBookPreviewSection";
 import { Section } from "@/components/home/Section";
-import { Spotlight } from "@/components/home/Spotlight";
 import { StudyMethodologySection } from "@/components/home/StudyMethodologySection";
 import { WhatsInside } from "@/components/home/WhatsInside";
 import {
@@ -26,7 +26,6 @@ import { siteUrl } from "@/lib/config";
 import {
   getCategories,
   getFaqs,
-  getFeaturedProducts,
   getProductBySlug,
 } from "@/services/catalog";
 import { getSettings } from "@/services/settings";
@@ -42,18 +41,33 @@ async function safe<T>(promise: Promise<T>, fallback: T): Promise<T> {
 }
 
 export default async function HomePage() {
-  const [settings, featured, categories, faqs] = await Promise.all([
+  const [settings, categories, faqs, englishProd, teluguProd] = await Promise.all([
     getSettings(),
-    safe(getFeaturedProducts(1), []),
     safe(getCategories(), []),
     safe(getFaqs(), []),
+    safe(getProductBySlug("target-police-general-studies-tslprb-tgpsc"), null),
+    safe(getProductBySlug("target-police-general-studies-telugu"), null),
   ]);
 
-  const spotlightSummary = featured[0] ?? null;
-  const spotlight = spotlightSummary ? await safe(getProductBySlug(spotlightSummary.slug), null) : null;
+  const effectiveEnglish = englishProd ?? FALLBACK_PRODUCT;
+  const effectiveTelugu = teluguProd ?? {
+    ...FALLBACK_PRODUCT,
+    id: "6ab7cfff-165f-41d5-aa4e-eb457045db5b",
+    slug: "target-police-general-studies-telugu",
+    title: "Target Police: 360° Explanation of General Studies (Telugu Medium)",
+    subtitle: "Previous Question Papers",
+    language: "Telugu",
+    cover: {
+      id: "img-telugu",
+      url: "/images/books/target-police-telugu.jpg",
+      alt: "Target Police Telugu Cover",
+      width: 800,
+      height: 1200,
+      sortOrder: 0,
+    },
+  };
 
-  // The featured book is shown from its data, not a cover photo.
-  const fromDb = spotlight ? showcaseFromProduct(spotlight) : null;
+  const fromDb = effectiveEnglish ? showcaseFromProduct(effectiveEnglish) : null;
   const showcase = fromDb && fromDb.highlights.length > 0 ? fromDb : FALLBACK_SHOWCASE;
 
   const exams = categories.filter((c) => c.kind === "exam");
@@ -61,7 +75,6 @@ export default async function HomePage() {
 
   const effectiveExams = exams.length > 0 ? exams : DEFAULT_EXAMS;
   const effectiveSubjects = subjects.length > 0 ? subjects : DEFAULT_SUBJECTS;
-  const effectiveSpotlight = spotlight ?? FALLBACK_PRODUCT;
   const effectiveFaqs = faqs.length > 0 ? faqs : DEFAULT_FAQS;
 
   return (
@@ -76,19 +89,22 @@ export default async function HomePage() {
       <EcommerceUspStrip />
 
       <Section
+        title="Official Publications & Direct Purchase"
+        description="Select your edition below. Both editions include 10 years of solved question papers, 2026 state and central budgets, and socio-economic survey analysis."
+        id="publications"
+      >
+        <DualBookShowcase
+          englishProduct={effectiveEnglish}
+          teluguProduct={effectiveTelugu}
+        />
+      </Section>
+
+      <Section
         title="Browse by Exam Category"
         description="Official preparation materials and previous solved question papers for UPSC, TGPSC, TSLPRB, APPSC and other competitive exams."
         id="exams"
       >
         <ExamTiles exams={effectiveExams} />
-      </Section>
-
-      <Section
-        title="Featured Official Publication"
-        description="Our flagship 360° General Studies solved papers guide for UPSC, TGPSC, TSLPRB, APPSC and competitive exams."
-        id="featured"
-      >
-        <Spotlight product={effectiveSpotlight} />
       </Section>
 
       <InsideBookPreviewSection slug={showcase.slug} />
@@ -113,7 +129,7 @@ export default async function HomePage() {
       </Section>
 
       <Section title="Author & Publisher Credentials" id="author">
-        <AuthorPublisher product={effectiveSpotlight} storeName={settings.store.name} />
+        <AuthorPublisher product={effectiveEnglish} storeName={settings.store.name} />
       </Section>
 
       <Section

@@ -43,7 +43,7 @@ export async function Header() {
                 </>
               ) : (
                 <>
-                  <span className="font-bold text-gold-400">⚡ 2026 Target Police Edition:</span> Official General Studies 360° Solved Papers Available Now
+                  <span className="font-bold text-gold-400">2026 Target Police Edition:</span> Official General Studies 360° Solved Papers Available Now
                 </>
               )}
             </span>

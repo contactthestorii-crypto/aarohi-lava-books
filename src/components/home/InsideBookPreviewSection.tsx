@@ -83,7 +83,7 @@ export function InsideBookPreviewSection({ slug }: { slug: string }) {
                 className="rounded-xl object-cover transition-transform duration-500 hover:scale-[1.02]"
               />
               <div className="absolute bottom-4 left-4 rounded-lg bg-navy-950/90 px-3 py-1 text-xs font-bold text-white shadow-md backdrop-blur-md">
-                📖 Actual Sample Pages: General Studies & Telangana Economy
+                Sample Pages: General Studies & Telangana Economy
               </div>
             </div>
           </div>
