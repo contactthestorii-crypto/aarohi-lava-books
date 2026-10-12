@@ -17,7 +17,7 @@ import { siteUrl } from "@/lib/config";
 import { discountPercent } from "@/lib/utils/money";
 import { getAllProductSlugs, getApprovedReviews, getProductBySlug, getRelatedProducts } from "@/services/catalog";
 import { getFrequentlyBoughtTogether } from "@/services/recommendations";
-import { DEFAULT_REVIEWS, FALLBACK_PRODUCT } from "@/lib/content/default-catalog";
+import { DEFAULT_REVIEWS, FALLBACK_PRODUCT, FALLBACK_TELUGU_PRODUCT } from "@/lib/content/default-catalog";
 import { FEATURED_BOOK } from "@/lib/content/featured-book";
 import type { Product, Review } from "@/types";
 
@@ -37,6 +37,9 @@ async function load(slug: string) {
     if (product) return product;
   } catch {
     // fallback below
+  }
+  if (slug.includes("telugu")) {
+    return FALLBACK_TELUGU_PRODUCT;
   }
   if (slug === FEATURED_BOOK.slug || slug.includes("target-police")) {
     return FALLBACK_PRODUCT;

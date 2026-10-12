@@ -21,7 +21,15 @@ export function BookCover({
 }) {
   const isTargetPolice =
     product.title?.toLowerCase().includes("target police") ||
+    product.title?.includes("టార్గెట్ పోలీస్") ||
     (typeof product.slug === "string" && product.slug.includes("target-police"));
+  const isTelugu =
+    product.title?.includes("తెలుగు") ||
+    product.title?.includes("టార్గెట్") ||
+    (typeof product.slug === "string" && product.slug.includes("telugu"));
+  const fallbackCover = isTelugu
+    ? "/images/books/target-police-3d-telugu.jpg"
+    : "/images/books/target-police-3d-english.jpg";
 
   return (
     <div className={cn("relative aspect-[3/4] overflow-hidden rounded-[var(--radius-control)] bg-navy-50/70", className)}>
@@ -36,7 +44,7 @@ export function BookCover({
         />
       ) : isTargetPolice ? (
         <Image
-          src="/images/ecommerce/target-police-3d.jpg"
+          src={fallbackCover}
           alt={`${product.title} 3D Cover`}
           fill
           sizes={sizes}

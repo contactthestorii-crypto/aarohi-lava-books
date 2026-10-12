@@ -27,12 +27,18 @@ export function BookGallery({
   const [lens, setLens] = useState<{ x: number; y: number } | null>(null);
 
   if (images.length === 0) {
-    const isTargetPolice = title.toLowerCase().includes("target police");
+    const isTargetPolice =
+      title.toLowerCase().includes("target police") || title.includes("టార్గెట్ పోలీస్");
+    const isTelugu = title.includes("తెలుగు") || title.includes("టార్గెట్");
+    const fallbackImage = isTelugu
+      ? "/images/books/target-police-3d-telugu.jpg"
+      : "/images/books/target-police-3d-english.jpg";
+
     if (isTargetPolice) {
       return (
         <div className="relative mx-auto aspect-[3/4] w-full max-w-md overflow-hidden rounded-[var(--radius-card)] bg-navy-50/60 p-4 shadow-[var(--shadow-card)]">
           <Image
-            src="/images/ecommerce/target-police-3d.jpg"
+            src={fallbackImage}
             alt={`${title} 3D Cover Mockup`}
             fill
             priority

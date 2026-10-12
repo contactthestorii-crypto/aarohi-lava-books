@@ -24,7 +24,15 @@ import {
 // Every function degrades to an empty result when the store is not configured, so the
 // storefront renders a clear state instead of crashing (docs/ARCHITECTURE.md).
 
-import { DEFAULT_EXAMS, DEFAULT_FAQS, DEFAULT_REVIEWS, DEFAULT_SUBJECTS, FALLBACK_PRODUCT, FALLBACK_PRODUCT_SUMMARY } from "@/lib/content/default-catalog";
+import {
+  DEFAULT_EXAMS,
+  DEFAULT_FAQS,
+  DEFAULT_REVIEWS,
+  DEFAULT_SUBJECTS,
+  FALLBACK_PRODUCT,
+  FALLBACK_PRODUCT_SUMMARY,
+  FALLBACK_TELUGU_PRODUCT,
+} from "@/lib/content/default-catalog";
 import { FEATURED_BOOK } from "@/lib/content/featured-book";
 
 export const SORT_OPTIONS = {
@@ -177,6 +185,7 @@ export const getNewArrivals = (limit = 8) => listFlagged(null, limit);
 export async function getProductBySlug(slug: string): Promise<Product | null> {
   const supabase = getPublicSupabase();
   if (!supabase) {
+    if (slug.includes("telugu")) return FALLBACK_TELUGU_PRODUCT;
     if (slug === FEATURED_BOOK.slug || slug.includes("target-police")) return FALLBACK_PRODUCT;
     return null;
   }
@@ -188,10 +197,17 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     .maybeSingle();
   if (error) {
     log.error("catalog.getProductBySlug", error, { slug });
+    if (slug.includes("telugu")) return FALLBACK_TELUGU_PRODUCT;
     if (slug === FEATURED_BOOK.slug || slug.includes("target-police")) return FALLBACK_PRODUCT;
     return null;
   }
-  return data ? mapProduct(data as unknown as ProductRow) : slug === FEATURED_BOOK.slug || slug.includes("target-police") ? FALLBACK_PRODUCT : null;
+  return data
+    ? mapProduct(data as unknown as ProductRow)
+    : slug.includes("telugu")
+      ? FALLBACK_TELUGU_PRODUCT
+      : slug === FEATURED_BOOK.slug || slug.includes("target-police")
+        ? FALLBACK_PRODUCT
+        : null;
 }
 
 /** Books sharing a category or exam with `product`, best matches first. */

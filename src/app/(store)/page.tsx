@@ -19,6 +19,7 @@ import {
   DEFAULT_FAQS,
   DEFAULT_SUBJECTS,
   FALLBACK_PRODUCT,
+  FALLBACK_TELUGU_PRODUCT,
 } from "@/lib/content/default-catalog";
 import { FALLBACK_SHOWCASE, showcaseFromProduct } from "@/lib/content/showcase";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -50,22 +51,7 @@ export default async function HomePage() {
   ]);
 
   const effectiveEnglish = englishProd ?? FALLBACK_PRODUCT;
-  const effectiveTelugu = teluguProd ?? {
-    ...FALLBACK_PRODUCT,
-    id: "6ab7cfff-165f-41d5-aa4e-eb457045db5b",
-    slug: "target-police-general-studies-telugu",
-    title: "Target Police: 360° Explanation of General Studies (Telugu Medium)",
-    subtitle: "Previous Question Papers",
-    language: "Telugu",
-    cover: {
-      id: "img-telugu",
-      url: "/images/books/target-police-telugu.jpg",
-      alt: "Target Police Telugu Cover",
-      width: 800,
-      height: 1200,
-      sortOrder: 0,
-    },
-  };
+  const effectiveTelugu = teluguProd ?? FALLBACK_TELUGU_PRODUCT;
 
   const fromDb = effectiveEnglish ? showcaseFromProduct(effectiveEnglish) : null;
   const showcase = fromDb && fromDb.highlights.length > 0 ? fromDb : FALLBACK_SHOWCASE;
