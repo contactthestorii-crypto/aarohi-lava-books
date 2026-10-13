@@ -253,6 +253,8 @@ export function FaqAccordion({ faqs }: { faqs: Faq[] }) {
 }
 
 export function ContactBand({ phone, email }: { phone: string; email: string }) {
+  const phoneNumbers = phone ? phone.split(",").map((p) => p.trim()).filter(Boolean) : [];
+
   return (
     <div className="flex flex-col gap-5 rounded-[var(--radius-card)] border-2 border-navy-900 p-6 md:flex-row md:items-center md:justify-between md:p-8">
       <div className="flex gap-4">
@@ -260,10 +262,18 @@ export function ContactBand({ phone, email }: { phone: string; email: string }) 
         <div>
           <p className="font-display text-xl font-extrabold text-ink">Questions about a book or an order?</p>
           <p className="mt-1 text-[15px] text-muted">
-            {phone || email ? (
+            {phoneNumbers.length > 0 || email ? (
               <>
-                Reach us at {phone ? <a href={`tel:${phone}`} className="font-semibold text-navy-700">{phone}</a> : null}
-                {phone && email ? " or " : null}
+                Reach us at{" "}
+                {phoneNumbers.map((p, idx) => (
+                  <span key={p}>
+                    <a href={`tel:${p.replace(/[^\d+]/g, "")}`} className="font-semibold text-navy-700">
+                      {p}
+                    </a>
+                    {idx < phoneNumbers.length - 1 ? " / " : ""}
+                  </span>
+                ))}
+                {phoneNumbers.length > 0 && email ? " or " : null}
                 {email ? <a href={`mailto:${email}`} className="font-semibold text-navy-700">{email}</a> : null}.
               </>
             ) : (

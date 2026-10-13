@@ -10,12 +10,12 @@ import { log } from "@/lib/utils/log";
 const storeSchema = z.object({
   name: z.string().default("Aarohi Lava Publications"),
   short_name: z.string().default("Aarohi Lava"),
-  tagline: z.string().default(""),
-  support_email: z.string().default(""),
-  support_phone: z.string().default(""),
-  whatsapp: z.string().default(""),
-  address: z.string().default(""),
-  business_hours: z.string().default(""),
+  tagline: z.string().default("Books for Telangana competitive exams"),
+  support_email: z.string().default("support@aarohilavapublications.com"),
+  support_phone: z.string().default("+91 9110561719, +91 7416544419"),
+  whatsapp: z.string().default("+91 9110561719, +91 7416544419"),
+  address: z.string().default("Hyderabad, Telangana, India"),
+  business_hours: z.string().default("Mon-Sat, 9 AM - 6 PM"),
 });
 
 const homeSchema = z.object({

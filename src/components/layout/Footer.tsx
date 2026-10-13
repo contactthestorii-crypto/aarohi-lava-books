@@ -54,11 +54,22 @@ export async function Footer() {
           {store.tagline ? <p className="mt-3 max-w-xs text-xs text-navy-200">{store.tagline}</p> : null}
           <ul className="mt-5 space-y-2.5 text-sm">
             {store.support_phone ? (
-              <li className="flex items-center gap-2.5">
-                <Phone size={18} className="text-gold-400" />
-                <a href={`tel:${store.support_phone}`} className="hover:text-white">
-                  {store.support_phone}
-                </a>
+              <li className="flex items-start gap-2.5">
+                <Phone size={18} className="mt-0.5 shrink-0 text-gold-400" />
+                <div className="flex flex-wrap items-center gap-x-1.5">
+                  {store.support_phone.split(",").map((num, idx, arr) => {
+                    const clean = num.trim();
+                    const dial = clean.replace(/[^\d+]/g, "");
+                    return (
+                      <span key={clean} className="inline-flex items-center">
+                        <a href={`tel:${dial}`} className="hover:text-white">
+                          {clean}
+                        </a>
+                        {idx < arr.length - 1 ? <span className="ml-1.5 text-navy-400">,</span> : null}
+                      </span>
+                    );
+                  })}
+                </div>
               </li>
             ) : null}
             {store.support_email ? (

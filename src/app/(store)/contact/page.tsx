@@ -14,12 +14,31 @@ export const metadata: Metadata = {
 
 export default async function ContactPage() {
   const { store } = await getSettings();
+
+  const phoneNumbers = store.support_phone
+    ? store.support_phone.split(",").map((p) => p.trim()).filter(Boolean)
+    : [];
+
+  const whatsappNumbers = store.whatsapp
+    ? store.whatsapp.split(",").map((w) => w.trim()).filter(Boolean)
+    : [];
+
   const details = [
-    store.support_phone ? { icon: Phone, label: "Phone", value: store.support_phone, href: `tel:${store.support_phone}` } : null,
-    store.whatsapp ? { icon: WhatsappLogo, label: "WhatsApp", value: store.whatsapp, href: `https://wa.me/91${store.whatsapp.replace(/\D/g, "").slice(-10)}` } : null,
+    ...phoneNumbers.map((phone, idx) => ({
+      icon: Phone,
+      label: phoneNumbers.length > 1 ? `Phone ${idx + 1}` : "Phone",
+      value: phone,
+      href: `tel:${phone.replace(/[^\d+]/g, "")}`,
+    })),
+    ...whatsappNumbers.map((wa, idx) => ({
+      icon: WhatsappLogo,
+      label: whatsappNumbers.length > 1 ? `WhatsApp ${idx + 1}` : "WhatsApp",
+      value: wa,
+      href: `https://wa.me/91${wa.replace(/\D/g, "").slice(-10)}`,
+    })),
     store.support_email ? { icon: EnvelopeSimple, label: "Email", value: store.support_email, href: `mailto:${store.support_email}` } : null,
-    store.business_hours ? { icon: Clock, label: "Hours", value: store.business_hours } : null,
-    store.address ? { icon: MapPin, label: "Address", value: store.address } : null,
+    store.business_hours ? { icon: Clock, label: "Hours", value: store.business_hours, href: null } : null,
+    store.address ? { icon: MapPin, label: "Address", value: store.address, href: null } : null,
   ].filter((d): d is NonNullable<typeof d> => d !== null);
 
   return (
