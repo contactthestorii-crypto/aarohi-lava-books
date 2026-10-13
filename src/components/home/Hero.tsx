@@ -6,7 +6,9 @@ import {
   CaretRight,
   CheckCircle,
   Package,
+  ShieldCheck,
   ShoppingCart,
+  Sparkle,
   Star,
 } from "@phosphor-icons/react";
 import Image from "next/image";
@@ -17,12 +19,14 @@ import type { ShowcaseBook } from "@/lib/content/showcase";
 
 interface SlideData {
   id: string;
+  tabLabel: string;
   badge: string;
   badgeColor: string;
   titleLine1: string;
   titleLine2: string;
   titleGradient: string;
   subtitle: string;
+  authorInfo: string;
   pricePaise: number;
   mrpPaise: number;
   discountBadge: string;
@@ -33,31 +37,33 @@ interface SlideData {
   secondaryBtnHref?: string;
   imageSrc: string;
   imageAlt: string;
-  imageRatio: string;
   editionBadge: string;
+  ratingScore: string;
   ratingText: string;
-  bgGlowColor: string;
+  glowColor: string;
 }
 
 const SLIDES: SlideData[] = [
-  // Slide 1: Dual Edition Flagship Showcase
+  // Slide 1: Dual Flagship Edition
   {
     id: "dual-edition",
-    badge: "UPSC • TGPSC • TSLPRB • APPSC • OFFICIAL 2026 EDITION",
-    badgeColor: "border-gold-400/40 bg-gold-400/10 text-gold-400",
+    tabLabel: "Dual Editions (Both Books)",
+    badge: "TSLPRB • TGPSC • UPSC • APPSC • OFFICIAL 2026 RELEASE",
+    badgeColor: "border-amber-400/40 bg-amber-400/10 text-amber-300",
     titleLine1: "PREPARE SMARTER.",
-    titleLine2: "SCORE BETTER.",
-    titleGradient: "from-gold-300 via-gold-400 to-amber-500",
+    titleLine2: "SCORE HIGHER.",
+    titleGradient: "from-amber-200 via-amber-400 to-yellow-500",
     subtitle:
-      "The definitive 360° General Studies preparation guide with solved question papers for UPSC, TGPSC, TSLPRB, APPSC and Other State Exams.",
+      "The definitive 360° General Studies guide with 6 years of official solved papers (2016–2023) for Telangana Police SI, Groups and State Civil Services.",
+    authorInfo: "Author: Swathylava Neralla (M.Sc, M.A) • 624 Pages Solved Papers",
     pricePaise: 79900,
     mrpPaise: 89900,
-    discountBadge: "Save ₹100 • Special Launch",
+    discountBadge: "Special Price: ₹799 (MRP ₹899)",
     highlights: [
-      "UPSC, TGPSC, TSLPRB & APPSC Solved Papers",
-      "2026 Budget & Economic Survey Included",
-      "Topic-wise 360° Explanations",
-      "Fast Direct Delivery Across TS & AP",
+      "TSLPRB SI Prelims & Mains Solved Papers (2016–2023)",
+      "Central & State Budgets 2026–27 & Socio-Economic Survey",
+      "Topic-Wise 360° Conceptual Analysis & PYQ Trends",
+      "Fast Direct Dispatch from Hyderabad Across TS & AP",
     ],
     primaryBtnText: "ORDER ENGLISH EDITION",
     primaryBtnHref: "/books/target-police-general-studies-tslprb-tgpsc",
@@ -65,29 +71,31 @@ const SLIDES: SlideData[] = [
     secondaryBtnHref: "/books/target-police-general-studies-telugu",
     imageSrc: "/images/books/dual-books-3d-mockup.jpg",
     imageAlt: "Target Police 360 General Studies - English and Telugu Editions 3D Mockup",
-    imageRatio: "aspect-[1200/896]",
     editionBadge: "English & Telugu Medium",
-    ratingText: "4.9 / 5.0 Rating • Aspirants' #1 Choice",
-    bgGlowColor: "bg-amber-500/15",
+    ratingScore: "5.0",
+    ratingText: "5.0 / 5.0 Rating • Aspirants' First Choice",
+    glowColor: "from-amber-500/20 via-orange-500/10 to-transparent",
   },
   // Slide 2: English Medium Spotlight
   {
     id: "english-edition",
+    tabLabel: "English Medium",
     badge: "ENGLISH MEDIUM • COMPREHENSIVE 360° GS",
     badgeColor: "border-blue-400/40 bg-blue-500/10 text-blue-300",
-    titleLine1: "ALL COMPETITIVE EXAMS.",
+    titleLine1: "TARGET POLICE 2026.",
     titleLine2: "COMPLETE 360° GS.",
-    titleGradient: "from-blue-200 via-blue-400 to-cyan-300",
+    titleGradient: "from-sky-200 via-blue-400 to-indigo-300",
     subtitle:
-      "General Studies previous papers with in-depth analysis for UPSC, TGPSC, TSLPRB, APPSC & Other State Exams. Includes Budgets 2026-27, Socio-Economic Survey, and Current Affairs.",
+      "Complete General Studies previous question papers with exam-oriented 360° explanations. Updated with 2026 state socio-economic surveys, budgets, and awards.",
+    authorInfo: "Author: Swathylava Neralla (M.Sc, M.A) • Aarohi Lava Publications",
     pricePaise: 79900,
     mrpPaise: 89900,
-    discountBadge: "Special Price: ₹799",
+    discountBadge: "Special Price: ₹799 (11% Off)",
     highlights: [
-      "Topic-wise Solved PYQs",
-      "High-Yield Concept Clarity",
-      "Socio-Economic Survey 2026",
-      "Direct Publisher Dispatch",
+      "700+ Official SI Questions Solved with Detailed Notes",
+      "11 Core Subject Modules from History to Science & Tech",
+      "Socio-Economic Outlook 2026 & Latest State Budgets",
+      "Paperback Edition • 624 Pages • 2026 Revised Print",
     ],
     primaryBtnText: "ORDER ENGLISH EDITION",
     primaryBtnHref: "/books/target-police-general-studies-tslprb-tgpsc",
@@ -95,29 +103,31 @@ const SLIDES: SlideData[] = [
     secondaryBtnHref: "/books/target-police-general-studies-telugu",
     imageSrc: "/images/books/target-police-3d-english.jpg",
     imageAlt: "Target Police 360 General Studies - English Edition 3D Mockup",
-    imageRatio: "aspect-[682/1024]",
-    editionBadge: "English Medium • 2026 Data",
-    ratingText: "4.9 / 5.0 Rating • English Medium",
-    bgGlowColor: "bg-blue-600/15",
+    editionBadge: "English Medium • 2026 Print",
+    ratingScore: "5.0",
+    ratingText: "5.0 / 5.0 Rating • English Medium",
+    glowColor: "from-blue-600/20 via-sky-500/10 to-transparent",
   },
   // Slide 3: Telugu Medium Spotlight
   {
     id: "telugu-edition",
+    tabLabel: "తెలుగు మీడియం (Telugu)",
     badge: "తెలుగు మీడియం • ప్రత్యేక ముద్రణ 2026",
     badgeColor: "border-red-400/40 bg-red-500/10 text-red-300",
     titleLine1: "టార్గెట్ పోలీస్ 2026.",
     titleLine2: "360° జనరల్ స్టడీస్.",
-    titleGradient: "from-red-200 via-amber-300 to-gold-400",
+    titleGradient: "from-amber-200 via-rose-300 to-amber-400",
     subtitle:
-      "UPSC, TGPSC, TSLPRB, APPSC & ఇతర పోటీ పరీక్షల గత ప్రశ్నా పత్రాలు (2016–2023) 360° సమగ్ర వివరణతో. తెలంగాణ చరిత్ర, ఉద్యమం, సామాజిక సర్వే 2026 మరియు రాష్ట్ర బడ్జెట్ అంశాలతో.",
+      "తెలంగాణ సబ్-ఇన్స్పెక్టర్ ప్రిలిమ్స్ మరియు మెయిన్స్ (2016–2023) అన్ని గత ప్రశ్నా పత్రాలు 360° సమగ్ర వివరణలతో. తెలంగాణ చరిత్ర, ఉద్యమం, మరియు సామాజిక ఆర్థిక సర్వే 2026 అంశాలతో.",
+    authorInfo: "రచయిత్రి: స్వాతిలావ నేరళ్ల (M.Sc, M.A) • ఆరోహి లావా పబ్లికేషన్స్",
     pricePaise: 79900,
     mrpPaise: 89900,
-    discountBadge: "ప్రత్యేక ధర: ₹799",
+    discountBadge: "ప్రత్యేక ధర: ₹799 (MRP ₹899)",
     highlights: [
-      "ప్రిలిమ్స్ & మెయిన్స్ సాల్వ్డ్ పేపర్స్ (2016–2023)",
-      "టాపిక్-వైజ్ 360° సమగ్ర వివరణలు",
-      "2026-27 రాష్ట్ర, కేంద్ర బడ్జెట్",
-      "తెలంగాణ & AP వ్యాప్తంగా వేగవంతమైన డెలివరీ",
+      "ఎస్సై ప్రిలిమ్స్ & మెయిన్స్ సాల్వ్డ్ పేపర్లు (2016–2023)",
+      "టాపిక్-వైజ్ 360° విశ్లేషణ మరియు 700+ పరీక్ష ప్రశ్నల సాధన",
+      "2026–27 రాష్ట్ర & కేంద్ర బడ్జెట్, సోషియో-ఎకనామిక్ సర్వే 2026",
+      "తెలంగాణ & AP వ్యాప్తంగా 24 గంటల్లో డిస్పాచ్",
     ],
     primaryBtnText: "ఆర్డర్ చేయండి - TELUGU EDITION",
     primaryBtnHref: "/books/target-police-general-studies-telugu",
@@ -125,10 +135,10 @@ const SLIDES: SlideData[] = [
     secondaryBtnHref: "/books/target-police-general-studies-tslprb-tgpsc",
     imageSrc: "/images/books/target-police-3d-telugu.jpg",
     imageAlt: "Target Police 360 General Studies - Telugu Edition 3D Mockup",
-    imageRatio: "aspect-[896/1200]",
-    editionBadge: "తెలుగు మీడియం • 2026 డేటా",
-    ratingText: "4.9 / 5.0 Rating • తెలుగు మీడియం",
-    bgGlowColor: "bg-red-600/15",
+    editionBadge: "తెలుగు మీడియం • 2026 ముద్రణ",
+    ratingScore: "5.0",
+    ratingText: "5.0 / 5.0 Rating • తెలుగు మీడియం",
+    glowColor: "from-rose-600/20 via-amber-500/10 to-transparent",
   },
 ];
 
@@ -149,171 +159,251 @@ export function Hero(_props: {
     setCurrent((prev) => (prev - 1 + SLIDES.length) % SLIDES.length);
   }, []);
 
-  // Auto-play interval (6 seconds)
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowRight") nextSlide();
+      if (e.key === "ArrowLeft") prevSlide();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [nextSlide, prevSlide]);
+
+  // Auto-play timer (7 seconds)
   useEffect(() => {
     if (isPaused) return;
-    const interval = setInterval(nextSlide, 6000);
+    const interval = setInterval(nextSlide, 7000);
     return () => clearInterval(interval);
   }, [isPaused, nextSlide]);
 
-  const slide = SLIDES[current];
-
   return (
     <section
-      aria-label="Hero Banner Carousel"
+      aria-label="Hero Showcase"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
-      className="relative w-full overflow-hidden bg-[#02040a] text-white min-h-[82vh] lg:min-h-[88vh] xl:min-h-[92vh] flex flex-col justify-between border-b border-white/10 select-none"
+      className="relative w-full overflow-hidden bg-gradient-to-b from-[#050B17] via-[#091224] to-[#040813] text-white border-b border-white/10 select-none"
     >
-      {/* 1. Full-Screen Cinematic Ambient Lighting */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden select-none">
-        {/* Dynamic Slide Ambient Spotlight */}
+      {/* Background Studio Lighting Atmosphere */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {/* Dynamic ambient spotlight */}
         <div
-          className={`absolute -top-32 right-1/4 h-[44rem] w-[44rem] rounded-full ${slide.bgGlowColor} blur-[150px] transition-colors duration-1000`}
+          className={`absolute -top-40 right-1/4 h-[48rem] w-[48rem] rounded-full bg-gradient-to-br ${SLIDES[current].glowColor} blur-[140px] transition-all duration-1000 ease-out`}
         />
-        {/* Left Side Glow */}
-        <div className="absolute top-1/4 -left-32 h-[36rem] w-[36rem] rounded-full bg-red-600/[0.10] blur-[150px]" />
-        {/* Bottom Stage Lighting */}
-        <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-black via-black/60 to-transparent" />
-        {/* Micro-dot Luxury Texture */}
-        <div className="absolute inset-0 bg-[radial-gradient(#ffffff0a_1px,transparent_1px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] opacity-70" />
+        {/* Secondary soft rim light */}
+        <div className="absolute top-1/3 -left-20 h-[36rem] w-[36rem] rounded-full bg-red-700/[0.08] blur-[140px]" />
+        {/* Floor pedestal light */}
+        <div className="absolute bottom-0 inset-x-0 h-44 bg-gradient-to-t from-[#020409] via-[#020409]/60 to-transparent" />
+        {/* Luxury geometric stardust mesh */}
+        <div className="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:28px_28px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_35%,#000_65%,transparent_100%)] opacity-80" />
       </div>
 
-      {/* 2. Main Full-Screen Content Canvas */}
-      <div className="container-page relative z-10 w-full flex-1 flex items-center py-12 sm:py-16 lg:py-20">
-        <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8 xl:gap-14 w-full">
-          
-          {/* LEFT SIDE: Typography, Offers & CTAs */}
-          <div className="lg:col-span-7 flex flex-col items-start text-left transition-all duration-500">
-            
-            {/* Animated Eyebrow Badge */}
-            <div
-              className={`inline-flex items-center gap-2.5 rounded-full border px-4 py-1.5 text-xs font-black uppercase tracking-widest backdrop-blur-xl shadow-lg transition-all duration-500 ${slide.badgeColor}`}
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-current" />
-              </span>
-              <span>{slide.badge}</span>
-            </div>
-
-            {/* Main Headline */}
-            <h1 className="mt-5 font-display-condensed text-5xl sm:text-6xl lg:text-[4.5rem] font-black uppercase tracking-tight text-white leading-[1.0] drop-shadow-xl">
-              {slide.titleLine1}
-              <br />
-              <span
-                className={`text-transparent bg-clip-text bg-gradient-to-r ${slide.titleGradient}`}
-              >
-                {slide.titleLine2}
-              </span>
-            </h1>
-
-            {/* Subtitle */}
-            <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl font-normal">
-              {slide.subtitle}
-            </p>
-
-            {/* Studio Launch Price Card */}
-            <div className="mt-6 flex flex-wrap items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-3.5 sm:px-5 backdrop-blur-2xl shadow-[0_20px_40px_rgba(0,0,0,0.6)]">
-              <div className="flex items-baseline gap-2.5">
-                <span className="text-3xl font-black text-gold-400 tracking-tight">₹{Math.round(slide.pricePaise / 100)}</span>
-                <span className="text-base text-slate-500 line-through">₹{Math.round(slide.mrpPaise / 100)}</span>
-              </div>
-              <span className="rounded-full bg-emerald-500/20 border border-emerald-500/40 px-3 py-0.5 text-xs font-black uppercase tracking-wider text-emerald-400">
-                {slide.discountBadge}
-              </span>
-              <span className="text-xs text-slate-300 font-medium hidden sm:inline-block">
-                • In Stock • Direct Publisher Dispatch
-              </span>
-            </div>
-
-            {/* 4 Feature Checklist Points */}
-            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-slate-200 w-full max-w-lg">
-              {slide.highlights.map((item) => (
-                <div key={item} className="flex items-center gap-2.5">
-                  <CheckCircle size={18} weight="fill" className="text-gold-400 shrink-0" />
-                  <span className="font-medium">{item}</span>
-                </div>
-              ))}
-            </div>
-
-            {/* Action Buttons */}
-            <div className="mt-8 flex flex-wrap items-center gap-3.5 w-full sm:w-auto">
-              <ButtonLink
-                href={slide.primaryBtnHref}
-                size="lg"
-                icon={<ArrowRight size={18} weight="bold" />}
-                className="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-black uppercase tracking-wider shadow-[0_0_30px_rgba(220,38,38,0.45)] hover:shadow-[0_0_40px_rgba(220,38,38,0.65)] hover:-translate-y-0.5 transition-all flex-row-reverse rounded-xl"
-              >
-                <ShoppingCart size={18} weight="bold" className="mr-1 inline" /> {slide.primaryBtnText}
-              </ButtonLink>
-
-              {slide.secondaryBtnText && slide.secondaryBtnHref ? (
-                <ButtonLink
-                  href={slide.secondaryBtnHref}
-                  size="lg"
-                  variant="inverse"
-                  icon={<ArrowRight size={18} weight="bold" />}
-                  className="bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/20 font-black uppercase tracking-wider backdrop-blur-xl hover:-translate-y-0.5 transition-all flex-row-reverse rounded-xl shadow-lg hover:border-gold-400/50"
+      {/* Main Container */}
+      <div className="container-page relative z-10 w-full pt-8 sm:pt-10 lg:pt-12 pb-10 sm:pb-14">
+        
+        {/* Interactive Edition Navigation Tabs */}
+        <div className="mb-8 flex items-center justify-start sm:justify-center overflow-x-auto scrollbar-none py-1">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] p-1.5 backdrop-blur-2xl shadow-xl">
+            {SLIDES.map((s, idx) => {
+              const isActive = idx === current;
+              return (
+                <button
+                  key={s.id}
+                  type="button"
+                  onClick={() => setCurrent(idx)}
+                  className={`relative flex items-center gap-2 rounded-full px-4 sm:px-5 py-2 text-xs sm:text-sm font-bold tracking-wide transition-all duration-300 whitespace-nowrap ${
+                    isActive
+                      ? "bg-white text-navy-950 shadow-md scale-[1.02]"
+                      : "text-slate-300 hover:text-white hover:bg-white/[0.08]"
+                  }`}
                 >
-                  {slide.secondaryBtnText}
-                </ButtonLink>
-              ) : null}
+                  {isActive ? (
+                    <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
+                  ) : null}
+                  <span>{s.tabLabel}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-              <Link
-                href="/track-order"
-                className="inline-flex items-center gap-2 px-3 py-2 text-xs sm:text-sm font-semibold text-slate-400 hover:text-white transition-colors"
-              >
-                <Package size={16} weight="bold" />
-                <span>Track Order</span>
-              </Link>
-            </div>
+        {/* 2-Column Grid: Text on Left, Fixed-Stage 3D Book on Right */}
+        <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-10 xl:gap-14 min-h-[500px] sm:min-h-[540px]">
+          
+          {/* LEFT COLUMN: Slide Content */}
+          <div className="lg:col-span-7 relative min-h-[440px] flex flex-col justify-center">
+            {SLIDES.map((s, idx) => {
+              const isActive = idx === current;
+              return (
+                <div
+                  key={s.id}
+                  aria-hidden={!isActive}
+                  className={`transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    isActive
+                      ? "opacity-100 translate-x-0 relative z-10 pointer-events-auto"
+                      : "opacity-0 -translate-x-6 absolute inset-0 z-0 pointer-events-none"
+                  }`}
+                >
+                  {/* Eyebrow Badge */}
+                  <div
+                    className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1 text-xs font-black uppercase tracking-wider backdrop-blur-xl shadow-sm ${s.badgeColor}`}
+                  >
+                    <Sparkle size={14} weight="fill" className="text-current" />
+                    <span>{s.badge}</span>
+                  </div>
 
+                  {/* Main Headline */}
+                  <h1 className="mt-4 font-display-condensed text-4xl sm:text-5xl lg:text-[4rem] font-black uppercase tracking-tight text-white leading-[1.05]">
+                    {s.titleLine1}
+                    <br />
+                    <span
+                      className={`text-transparent bg-clip-text bg-gradient-to-r ${s.titleGradient}`}
+                    >
+                      {s.titleLine2}
+                    </span>
+                  </h1>
+
+                  {/* Author Credential */}
+                  <p className="mt-2 text-xs sm:text-sm font-semibold tracking-wide text-amber-300/90">
+                    {s.authorInfo}
+                  </p>
+
+                  {/* Subtitle */}
+                  <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl font-normal">
+                    {s.subtitle}
+                  </p>
+
+                  {/* Price & Offer Card */}
+                  <div className="mt-5 flex flex-wrap items-center gap-3.5 rounded-2xl border border-white/10 bg-white/[0.04] p-3 px-4 sm:px-5 backdrop-blur-xl shadow-lg w-fit">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-3xl font-black text-amber-400 tracking-tight">
+                        ₹{Math.round(s.pricePaise / 100)}
+                      </span>
+                      <span className="text-sm text-slate-400 line-through">
+                        ₹{Math.round(s.mrpPaise / 100)}
+                      </span>
+                    </div>
+                    <span className="rounded-full bg-emerald-500/20 border border-emerald-500/40 px-2.5 py-0.5 text-xs font-bold text-emerald-300">
+                      {s.discountBadge}
+                    </span>
+                    <span className="text-xs text-slate-300 font-medium hidden sm:inline-block">
+                      • In Stock • 2026 Print
+                    </span>
+                  </div>
+
+                  {/* Highlights Checklist */}
+                  <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs sm:text-sm text-slate-200 max-w-xl">
+                    {s.highlights.map((h) => (
+                      <div key={h} className="flex items-center gap-2">
+                        <CheckCircle size={16} weight="fill" className="text-amber-400 shrink-0" />
+                        <span className="font-medium leading-tight">{h}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* CTA Action Buttons */}
+                  <div className="mt-7 flex flex-wrap items-center gap-3.5">
+                    <ButtonLink
+                      href={s.primaryBtnHref}
+                      size="lg"
+                      icon={<ArrowRight size={18} weight="bold" />}
+                      className="bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400 text-white font-black uppercase tracking-wider shadow-[0_4px_25px_rgba(220,38,38,0.45)] hover:shadow-[0_6px_35px_rgba(220,38,38,0.65)] hover:-translate-y-0.5 transition-all flex-row-reverse rounded-xl"
+                    >
+                      <ShoppingCart size={18} weight="bold" className="mr-1 inline" /> {s.primaryBtnText}
+                    </ButtonLink>
+
+                    {s.secondaryBtnText && s.secondaryBtnHref ? (
+                      <ButtonLink
+                        href={s.secondaryBtnHref}
+                        size="lg"
+                        variant="inverse"
+                        icon={<ArrowRight size={18} weight="bold" />}
+                        className="bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/20 font-bold uppercase tracking-wider backdrop-blur-xl hover:-translate-y-0.5 transition-all flex-row-reverse rounded-xl hover:border-amber-400/50"
+                      >
+                        {s.secondaryBtnText}
+                      </ButtonLink>
+                    ) : null}
+
+                    <Link
+                      href="/track-order"
+                      className="inline-flex items-center gap-1.5 px-2 py-2 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+                    >
+                      <Package size={15} weight="bold" />
+                      <span>Track Order</span>
+                    </Link>
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
-          {/* RIGHT SIDE: 3D Product Showcase */}
+          {/* RIGHT COLUMN: 3D Book Showcase Stage with Stable Crossfade */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center">
             <div className="relative w-full max-w-md sm:max-w-lg">
               
-              {/* Floating Rating Badge */}
-              <div className="absolute -top-4 right-4 z-30 flex items-center gap-1.5 rounded-full bg-[#0a1124]/90 border border-gold-400/40 px-3.5 py-1 shadow-[0_10px_25px_rgba(0,0,0,0.8)] backdrop-blur-xl">
-                <div className="flex text-gold-400">
-                  <Star size={13} weight="fill" />
-                  <Star size={13} weight="fill" />
-                  <Star size={13} weight="fill" />
-                  <Star size={13} weight="fill" />
-                  <Star size={13} weight="fill" />
+              {/* Floating Social Proof Badge */}
+              <div className="absolute -top-3 right-4 z-30 flex items-center gap-1.5 rounded-full bg-[#070e20]/95 border border-amber-400/40 px-3 py-1 shadow-xl backdrop-blur-xl">
+                <div className="flex text-amber-400">
+                  <Star size={12} weight="fill" />
+                  <Star size={12} weight="fill" />
+                  <Star size={12} weight="fill" />
+                  <Star size={12} weight="fill" />
+                  <Star size={12} weight="fill" />
                 </div>
-                <span className="text-xs font-bold text-slate-100">{slide.ratingText}</span>
+                <span className="text-xs font-bold text-slate-100">
+                  {SLIDES[current].ratingText}
+                </span>
               </div>
 
-              {/* 3D Showcase Card */}
-              <Link
-                href={slide.primaryBtnHref}
-                className="group relative block w-full rounded-2xl overflow-hidden shadow-[0_35px_80px_rgba(0,0,0,0.95)] ring-1 ring-white/10 transition-all duration-500 hover:-translate-y-2 bg-[#040816]"
-              >
-                <div className={`relative w-full ${slide.imageRatio} max-h-[520px]`}>
-                  <Image
-                    src={slide.imageSrc}
-                    alt={slide.imageAlt}
-                    fill
-                    priority
-                    sizes="(min-width: 1024px) 45vw, 90vw"
-                    className="object-contain p-2 transition-transform duration-700 group-hover:scale-105"
-                  />
-                  
-                  {/* Floating Edition Tag */}
-                  <span className="absolute bottom-3 left-3 rounded-md bg-[#02040a]/90 border border-gold-400/40 px-2.5 py-1 text-xs font-black uppercase text-gold-400 shadow-md backdrop-blur-md">
-                    {slide.editionBadge}
-                  </span>
-                </div>
-              </Link>
+              {/* Fixed-Height 3D Showcase Stage */}
+              <div className="relative h-[420px] sm:h-[480px] lg:h-[520px] w-full flex items-center justify-center p-4">
+                
+                {/* Stage Floor Glow & Realistic Shadow */}
+                <div className="pointer-events-none absolute bottom-4 inset-x-8 h-10 rounded-full bg-black/80 blur-xl" />
+                <div className="pointer-events-none absolute bottom-2 inset-x-16 h-6 rounded-full bg-black/95 blur-md" />
 
-              {/* Direct Edition Navigation Links */}
-              <div className="mt-4 grid grid-cols-2 gap-3 w-full">
+                {/* Cross-Fading Book Renders */}
+                {SLIDES.map((s, idx) => {
+                  const isActive = idx === current;
+                  return (
+                    <div
+                      key={s.id}
+                      aria-hidden={!isActive}
+                      className={`absolute inset-0 flex items-center justify-center p-3 transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                        isActive
+                          ? "opacity-100 scale-100 z-20 pointer-events-auto"
+                          : "opacity-0 scale-95 z-0 pointer-events-none"
+                      }`}
+                    >
+                      <Link
+                        href={s.primaryBtnHref}
+                        className="group relative block w-full h-full flex items-center justify-center"
+                      >
+                        <div className="relative w-full h-full max-h-[480px] transition-transform duration-500 group-hover:scale-105">
+                          <Image
+                            src={s.imageSrc}
+                            alt={s.imageAlt}
+                            fill
+                            priority
+                            sizes="(min-width: 1024px) 40vw, 85vw"
+                            className="object-contain drop-shadow-[0_20px_35px_rgba(0,0,0,0.7)]"
+                          />
+                        </div>
+
+                        {/* Floating Edition Tag */}
+                        <span className="absolute bottom-3 left-4 rounded-md bg-[#02040a]/90 border border-amber-400/40 px-2.5 py-1 text-xs font-bold uppercase text-amber-300 shadow-lg backdrop-blur-md">
+                          {s.editionBadge}
+                        </span>
+                      </Link>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Direct Edition Quick Access Switcher */}
+              <div className="mt-2 grid grid-cols-2 gap-3 w-full">
                 <Link
                   href="/books/target-police-general-studies-tslprb-tgpsc"
-                  className="flex items-center justify-center gap-1.5 rounded-xl border border-gold-400/30 bg-white/[0.04] py-2 px-3 text-xs font-bold text-slate-200 hover:text-gold-400 hover:border-gold-400/60 hover:bg-white/[0.08] transition-all"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-blue-400/30 bg-white/[0.04] py-2 px-3 text-xs font-bold text-slate-200 hover:text-blue-300 hover:border-blue-400/60 hover:bg-white/[0.08] transition-all"
                 >
                   <span>English Edition</span>
                   <ArrowRight size={12} weight="bold" />
@@ -321,7 +411,7 @@ export function Hero(_props: {
 
                 <Link
                   href="/books/target-police-general-studies-telugu"
-                  className="flex items-center justify-center gap-1.5 rounded-xl border border-red-500/30 bg-white/[0.04] py-2 px-3 text-xs font-bold text-slate-200 hover:text-red-400 hover:border-red-500/60 hover:bg-white/[0.08] transition-all"
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-red-500/30 bg-white/[0.04] py-2 px-3 text-xs font-bold text-slate-200 hover:text-red-300 hover:border-red-500/60 hover:bg-white/[0.08] transition-all"
                 >
                   <span>తెలుగు Edition</span>
                   <ArrowRight size={12} weight="bold" />
@@ -334,21 +424,21 @@ export function Hero(_props: {
         </div>
       </div>
 
-      {/* 3. Slider Navigation Controls & Indicator Dots */}
-      <div className="relative z-20 w-full border-t border-white/[0.08] bg-black/50 py-3.5 backdrop-blur-xl">
+      {/* Bottom Status Bar with Indicators & Controls */}
+      <div className="relative z-20 w-full border-t border-white/[0.08] bg-black/60 py-3 backdrop-blur-xl">
         <div className="container-page flex items-center justify-between">
           
-          {/* Trust Guarantees on Left */}
-          <div className="hidden sm:flex items-center gap-6 text-xs text-slate-300">
+          {/* Trust Highlights on Left */}
+          <div className="hidden sm:flex items-center gap-5 text-xs text-slate-300">
             <span className="flex items-center gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>In Stock • Ships in 24 Hours</span>
+              <ShieldCheck size={16} weight="fill" className="text-emerald-400" />
+              <span>Official Publisher • In Stock</span>
             </span>
-            <span className="text-white/20">|</span>
-            <span>UPSC • TGPSC • TSLPRB • APPSC Solved Papers</span>
+            <span className="text-white/20">•</span>
+            <span>UPSC • TGPSC • TSLPRB • APPSC 2026 Solved Papers</span>
           </div>
 
-          {/* Indicator Pills Center */}
+          {/* Center Indicator Dots */}
           <div className="flex items-center gap-2 mx-auto sm:mx-0">
             {SLIDES.map((s, idx) => (
               <button
@@ -358,30 +448,30 @@ export function Hero(_props: {
                 aria-label={`Go to slide ${idx + 1}`}
                 className={`transition-all duration-300 rounded-full ${
                   idx === current
-                    ? "w-8 h-2.5 bg-gradient-to-r from-gold-400 to-amber-500 shadow-[0_0_12px_rgba(250,204,21,0.5)]"
-                    : "w-2.5 h-2.5 bg-white/30 hover:bg-white/60"
+                    ? "w-8 h-2 bg-gradient-to-r from-amber-400 to-yellow-500 shadow-[0_0_12px_rgba(250,204,21,0.5)]"
+                    : "w-2 h-2 bg-white/30 hover:bg-white/60"
                 }`}
               />
             ))}
           </div>
 
           {/* Left / Right Arrow Buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <button
               type="button"
               onClick={prevSlide}
               aria-label="Previous slide"
-              className="flex size-9 items-center justify-center rounded-xl border border-white/20 bg-white/[0.05] text-white hover:bg-white/20 hover:border-gold-400/50 transition-all active:scale-95"
+              className="flex size-8 items-center justify-center rounded-lg border border-white/15 bg-white/[0.04] text-white hover:bg-white/20 hover:border-amber-400/50 transition-all active:scale-95"
             >
-              <CaretLeft size={18} weight="bold" />
+              <CaretLeft size={16} weight="bold" />
             </button>
             <button
               type="button"
               onClick={nextSlide}
               aria-label="Next slide"
-              className="flex size-9 items-center justify-center rounded-xl border border-white/20 bg-white/[0.05] text-white hover:bg-white/20 hover:border-gold-400/50 transition-all active:scale-95"
+              className="flex size-8 items-center justify-center rounded-lg border border-white/15 bg-white/[0.04] text-white hover:bg-white/20 hover:border-amber-400/50 transition-all active:scale-95"
             >
-              <CaretRight size={18} weight="bold" />
+              <CaretRight size={16} weight="bold" />
             </button>
           </div>
 
